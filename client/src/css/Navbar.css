@@ -1,0 +1,214 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.navbar.navbar-scrolled {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar.navbar-scrolled .nav-link,
+.navbar.navbar-scrolled .navbar-brand {
+  color: #333 !important;
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem;
+}
+
+.nav-link:hover {
+  color: #ffd700 !important;
+}
+
+.btn-warning {
+  background-color: #ffd700;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #ffed4a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+/* Dropdown styles */
+.dropdown-menu {
+  padding: 0.5rem 0;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  border: none;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.dropdown-item i {
+  font-size: 1.1rem;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.dropdown-divider {
+  margin: 0.5rem 0;
+  opacity: 0.1;
+}
+
+/* Dark background override for specific pages */
+.navbar.bg-light {
+  background-color: #fff !important;
+}
+
+.navbar.bg-light .nav-link,
+.navbar.bg-light .navbar-brand {
+  color: #333 !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-collapse .nav-link {
+    color: #333 !important;
+  }
+
+  .navbar-toggler {
+    border: none;
+    padding: 0.5rem;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+  .dropdown-menu {
+    border: none;
+    box-shadow: none;
+    margin-top: 0;
+    padding: 0.5rem;
+  }
+
+  .dropdown-item {
+    border-radius: 5px;
+  }
+}
+
+/* Sign in button */
+.contact-btn {
+  background-color: #ffd700;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #ffed4a;
+}
+
+/* Make buttons and spans styled like links (when needed) */
+.nav-link,
+.nav-link-button {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar.navbar-scrolled .nav-link,
+.navbar.navbar-scrolled .nav-link-button {
+  color: #333;
+}
+
+/* Optional: space between nav items */
+.nav-links > * {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-pfp {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.placeholder-pfp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;  /* Same size as the user picture */
+  height: 40px; /* Same size as the user picture */
+  border-radius: 50%; /* Make it a circle */
+  background: linear-gradient(135deg, #ffcc70, #ffae00);  /* Gradient background */
+  color: white;  /* White text */
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+/* Update the logout button */
+.nav-link-button {
+  background-color: #ffd700; /* Same as sign in button */
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  border: none; /* Remove border */
+  cursor: pointer; /* Pointer on hover */
+}
+
+.nav-link-button:hover {
+  background-color: #ffed4a; /* Same hover effect as sign in */
+}
