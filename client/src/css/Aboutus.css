@@ -1,0 +1,508 @@
+/* AboutUs.css */
+:root {
+    --primary: #2a4d69;
+    --primary-light: #4b86b4;
+    --secondary: #e9c46a;
+    --accent: #e76f51;
+    --text-dark: #2c3e50;
+    --text-light: #546a7b;
+    --background: #f8f9fa;
+    --card-bg: #ffffff;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  .about-us-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--background);
+    line-height: 1.6;
+  }
+  
+  .about-header {
+    text-align: center;
+    padding: 80px 0 60px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    margin-bottom: 60px;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  
+  .about-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://i.pinimg.com/474x/e4/0d/f9/e40df9938d5459f19b938a080363e6c5.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+  }
+  
+  .about-header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    position: relative;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    position: relative;
+    letter-spacing: 1px;
+  }
+  
+  .mission-section {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  
+  .mission-content {
+    flex: 1;
+  }
+  
+  .mission-content h2 {
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .mission-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: var(--secondary);
+    border-radius: 2px;
+  }
+  
+  .mission-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+  }
+  
+  .mission-image {
+    flex: 1;
+    height: 450px;
+    background-image: url('https://en.casacol.co/wp-content/uploads/2025/02/casacol25_grupo-1024x575.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .mission-image:hover {
+    transform: scale(1.02);
+  }
+  
+  .mission-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(42, 77, 105, 0.1), rgba(42, 77, 105, 0.3));
+    border-radius: 12px;
+  }
+  
+  .values-section {
+    margin-bottom: 80px;
+  }
+  
+  .values-section h2, 
+  .team-section h2, 
+  .stats-section h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 50px;
+    position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .values-section h2::after, 
+  .team-section h2::after, 
+  .stats-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--secondary);
+    border-radius: 2px;
+  }
+  
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  
+  .value-card {
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    border-bottom: 4px solid transparent;
+  }
+  
+  .value-card:hover {
+    transform: translateY(-15px);
+    border-bottom: 4px solid var(--secondary);
+  }
+  
+  .value-icon {
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .value-icon::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(233, 196, 106, 0.2);
+    border-radius: 50%;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .value-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .value-card p {
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+  
+  .team-section {
+    margin-bottom: 80px;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+  }
+  
+  .team-member {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .team-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+  
+  .team-member:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .member-photo {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    background-size: cover;
+    background-position: center;
+    border: 5px solid rgba(75, 134, 180, 0.1);
+    transition: var(--transition);
+    position: relative;
+  }
+  
+  .team-member:hover .member-photo {
+    transform: scale(1.05);
+    border-color: rgba(75, 134, 180, 0.3);
+  }
+  
+  .photo1 {
+    background-image: url('https://en.casacol.co/wp-content/uploads/2025/02/casacol25_juancamilo-300x300.jpg')
+  }
+  
+  
+  .photo2 {
+    background-image: url('https://en.casacol.co/wp-content/uploads/2025/02/sandoval-300x300.jpg')
+  }
+  
+  .photo3 {
+    background-image: url('https://en.casacol.co/wp-content/uploads/2025/02/casacol25_juandavid-300x300.jpg');
+  }
+  
+  .team-member h3 {
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .position {
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+  
+  .bio {
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+  
+  .stats-section {
+    margin-bottom: 80px;
+    padding: 60px 0;
+    background-color: rgba(75, 134, 180, 0.05);
+    border-radius: 12px;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+  }
+  
+  .stat-item {
+    background: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .stat-item:hover {
+    transform: translateY(-10px);
+  }
+  
+  .stat-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-light), var(--secondary));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+  }
+  
+  .stat-item:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .stat-number::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 3px;
+    background: var(--secondary);
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+  
+  .stat-label {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  
+  .cta-section {
+    text-align: center;
+    padding: 80px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    border-radius: 12px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://i.pinimg.com/474x/e4/0d/f9/e40df9938d5459f19b938a080363e6c5.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    mix-blend-mode: overlay;
+  }
+  
+  .cta-section h2 {
+    font-size: 2.2rem;
+    color: white;
+    margin-bottom: 40px;
+    position: relative;
+    font-weight: 600;
+  }
+  
+  .cta-button {
+    background: var(--secondary);
+    color: var(--primary);
+    border: none;
+    padding: 16px 36px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(231, 111, 81, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s ease;
+  }
+  
+  .cta-button:hover {
+    color: white;
+    box-shadow: 0 6px 20px rgba(231, 111, 81, 0.4);
+  }
+  
+  .cta-button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .about-header h1 {
+      font-size: 2.5rem;
+    }
+    
+    .mission-section {
+      gap: 40px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .mission-section {
+      flex-direction: column;
+    }
+    
+    .mission-image {
+      width: 100%;
+      height: 350px;
+    }
+    
+    .about-header {
+      padding: 60px 0 40px;
+    }
+    
+    .about-header h1 {
+      font-size: 2.2rem;
+    }
+    
+    .subtitle {
+      font-size: 1.1rem;
+    }
+    
+    .values-section h2, 
+    .team-section h2, 
+    .stats-section h2,
+    .mission-content h2 {
+      font-size: 1.8rem;
+    }
+    
+    .cta-section h2 {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .stat-number {
+      font-size: 2.5rem;
+    }
+    
+    .value-card, 
+    .team-member, 
+    .stat-item {
+      padding: 25px 20px;
+    }
+    
+    .cta-button {
+      padding: 14px 28px;
+      font-size: 1.1rem;
+    }
+  }
