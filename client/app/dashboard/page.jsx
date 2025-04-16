@@ -38,9 +38,9 @@ import {
 import EstateManagement from "./components/EstateManagement"
 import Analitics from "./analytics/Analytics.jsx"
 import Customers from "./customers/Customer.jsx"
-import NewCustomer from "./new/NewCustomer.jsx"
 import Products from "./products/Products"
 import Verification from "./verify/Verify.jsx"
+import Inventory from "./products/inventory/page"
 
 
 export default function Dashboard() {
@@ -411,7 +411,6 @@ export default function Dashboard() {
       items: [
         { id: "products", name: "Products", icon: <ShoppingBag size={18} /> },
         { id: "customers", name: "Customers", icon: <Users size={18} /> },
-        { id: "new-customer", name: "New customer", icon: <UserPlus size={18} /> },
         { id: "verify", name: "Verify", icon: <UserCheck size={18} /> },
         { id: "new-product", name: "New product", icon: <PackagePlus size={18} /> },
         { id: "inventory", name: "Inventory", icon: <Clipboard size={18} /> },
@@ -633,8 +632,7 @@ export default function Dashboard() {
       case "customers":
         return <Customers />;
 
-      case "new-customer":
-        return <NewCustomer />;
+
 
       case "verify":
         return <Verification 
@@ -644,60 +642,20 @@ export default function Dashboard() {
         />;
 
       case "products":
-        return <Products />;
+        return <Products 
+          products={products}
+          loading={loading}
+          error={error}
+          handleAddProduct={handleAddProduct}
+          handleEditProduct={handleEditProduct}
+          handleDeleteProduct={handleDeleteProduct}
+        />;
 
       case "new-product":
         return <EstateManagement />;
 
       case "inventory":
-        return (
-          <div className="section-content">
-            <h1 className="dashboard-title">Inventory Management</h1>
-            <div className="section-card">
-              <div className="section-header">
-                <h5>Inventory Status</h5>
-                <div className="section-actions">
-                  <button className="btn-action">
-                    <Download size={16} /> Export
-                  </button>
-                  <button className="btn-action">
-                    <Upload size={16} /> Import
-                  </button>
-                </div>
-              </div>
-              <div className="section-body">
-                {/* Inventory content */}
-                <table className="data-table">
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Status</th>
-                      <th>Quantity</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((product) => (
-                      <tr key={product.id}>
-                        <td>{product.name}</td>
-                        <td>{product.status}</td>
-                        <td>{product.quantity || 0}</td>
-                        <td>
-                          <button 
-                            className="btn-sm"
-                            onClick={() => handleUpdateStock(product)}
-                          >
-                            Update Stock
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        );
+        return <Inventory />;
 
       default:
         return <div>Page not found</div>;

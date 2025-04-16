@@ -1,6 +1,6 @@
 "use client"
 
-import { Edit, PlusCircle, Search, Trash } from "lucide-react"
+import { Edit, PlusCircle, Search, Trash, Loader } from "lucide-react"
 
 export default function Products({ 
   products, 
@@ -105,4 +105,4 @@ export default function Products({
       </div>
     </div>
   )
-} 
+}

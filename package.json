@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@mui/x-charts": "^7.28.0"
   }
-} 
+}

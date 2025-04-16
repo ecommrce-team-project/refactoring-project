@@ -45,12 +45,7 @@ export default function Customers() {
               <div className="section-header">
                 <h5>Customer List</h5>
                 <div className="section-actions">
-                  <button 
-                    className="btn-action"
-                    onClick={() => setActiveSidebarItem("new-customer")}
-                  >
-                    <PlusCircle size={16} /> Add Customer
-                  </button>
+
                 </div>
               </div>
               <div className="section-body">

@@ -91,9 +91,7 @@ export default function Inventory() {
               <button className="btn-action">
                 <Upload size={16} /> Import
               </button>
-              <Link href="/dashboard/products" className="btn-action">
-                Back to Products
-              </Link>
+
             </div>
           </div>
           <div className="section-body">

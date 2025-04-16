@@ -1,6 +1,34 @@
 "use client"
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { BarChart2, LineChart, TrendingUp } from "lucide-react"
+import { PieChart } from '@mui/x-charts/PieChart';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { axisClasses } from '@mui/x-charts/ChartsAxis';
 
-import { BarChart2, LineChart, PieChart, TrendingUp } from "lucide-react"
+const chartSetting = {
+  yAxis: [
+    {
+      label: 'Customers',
+    },
+  ],
+  width: 500,
+  height: 300,
+  sx: {
+    [`.${axisClasses.left} .${axisClasses.label}`]: {
+      transform: 'translate(-20px, 0)',
+    },
+  },
+};
+
+const dataset = [
+  { month: 'Jan', customers: 30 },
+  { month: 'Feb', customers: 45 },
+  { month: 'Mar', customers: 55 },
+  { month: 'Apr', customers: 70 },
+  { month: 'May', customers: 85 },
+  { month: 'Jun', customers: 100 },
+];
 
 export default function Analytics({ 
   salesData, 
@@ -8,6 +36,38 @@ export default function Analytics({
   customerData, 
   productData 
 }) {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/category/getall');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await response.json();
+        
+        // Transform the data for the pie chart
+        const pieData = data.map((category, index) => ({
+          id: index,
+          value: 1, // You'll need to add a count or value field in your category model
+          label: category.name
+        }));
+        
+        setCategories(pieData);
+      } catch (err) {
+        console.error('Error fetching categories:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="section-content">
       <h1 className="dashboard-title">Analytics</h1>
@@ -29,43 +89,43 @@ export default function Analytics({
 
         <div className="analytics-card">
           <div className="analytics-header">
-            <h3>Revenue Trends</h3>
-            <LineChart size={24} />
-          </div>
-          <div className="analytics-chart">
-            {/* Revenue chart will be implemented here */}
-            <div className="chart-placeholder">
-              <LineChart size={48} />
-              <p>Revenue chart will be displayed here</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="analytics-card">
-          <div className="analytics-header">
             <h3>Customer Growth</h3>
             <TrendingUp size={24} />
           </div>
           <div className="analytics-chart">
-            {/* Customer growth chart will be implemented here */}
-            <div className="chart-placeholder">
-              <TrendingUp size={48} />
-              <p>Customer growth chart will be displayed here</p>
-            </div>
+            <BarChart
+              dataset={dataset}
+              xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+              series={[
+                { dataKey: 'customers', label: 'Customers', valueFormatter: (value) => `${value}` }
+              ]}
+              {...chartSetting}
+            />
           </div>
         </div>
 
         <div className="analytics-card">
           <div className="analytics-header">
             <h3>Product Distribution</h3>
-            <PieChart size={24} />
           </div>
           <div className="analytics-chart">
-            {/* Product distribution chart will be implemented here */}
-            <div className="chart-placeholder">
-              <PieChart size={48} />
-              <p>Product distribution chart will be displayed here</p>
-            </div>
+            {loading ? (
+              <div>Loading categories...</div>
+            ) : error ? (
+              <div>Error: {error}</div>
+            ) : (
+              <PieChart
+                series={[
+                  {
+                    data: categories,
+                    highlightScope: { faded: 'global', highlighted: 'item' },
+                    faded: { innerRadius: 30, additionalRadius: -30 },
+                  },
+                ]}
+                width={600}
+                height={200}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -77,16 +137,6 @@ export default function Analytics({
           <p className="summary-change positive">+12% from last month</p>
         </div>
         <div className="summary-card">
-          <h4>Total Revenue</h4>
-          <p className="summary-value">${revenueData?.total || 0}</p>
-          <p className="summary-change positive">+8% from last month</p>
-        </div>
-        <div className="summary-card">
-          <h4>New Customers</h4>
-          <p className="summary-value">{customerData?.new || 0}</p>
-          <p className="summary-change positive">+15% from last month</p>
-        </div>
-        <div className="summary-card">
           <h4>Top Product</h4>
           <p className="summary-value">{productData?.top || "N/A"}</p>
           <p className="summary-change positive">+20% sales increase</p>
@@ -94,4 +144,4 @@ export default function Analytics({
       </div>
     </div>
   )
-} 
+}
