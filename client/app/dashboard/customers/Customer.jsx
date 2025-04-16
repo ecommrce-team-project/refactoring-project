@@ -1,26 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Link from 'next/link';
-import { Edit, Trash, PlusCircle, UserCog } from 'lucide-react';
+import { Edit, Trash, PlusCircle, UserCog,Loader } from 'lucide-react';
 
 export default function Customers() {
-  const [customers, setCustomers] = useState([
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      status: 'Active',
-      joined: 'Jan 15, 2023',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      status: 'Active',
-      joined: 'Feb 22, 2023',
-    },
-  ]);
+  // const [customers, setCustomers] = useState([
+  //   {
+  //     id: 1,
+  //     name: 'John Doe',
+  //     email: 'john.doe@example.com',
+  //     status: 'Active',
+  //     joined: 'Jan 15, 2023',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Jane Smith',
+  //     email: 'jane.smith@example.com',
+  //     status: 'Active',
+  //     joined: 'Feb 22, 2023',
+  //   },
+  // ]);
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:3000/api/users/all-users');
+      if (!response.ok) throw new Error('Failed to fetch customers');
+      const data = await response.json();
+      setCustomers(data);
+    } catch (err) {
+      console.error('Error:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDeleteCustomer = (customerId) => {
     if (window.confirm('Are you sure you want to delete this customer?')) {
@@ -29,15 +49,58 @@ export default function Customers() {
     }
   };
 
-  const handleUpdateCustomer = (customerId) => {
+  // const handleUpdateCustomer = (customerId) => {
+  //   const customer = customers.find((c) => c.id === customerId);
+  //   if (customer) {
+  //     const newStatus = customer.status === 'Active' ? 'Inactive' : 'Active';
+  //     setCustomers(customers.map((c) => (c.id === customerId ? { ...c, status: newStatus } : c)));
+  //     alert(`Customer status updated to ${newStatus}`);
+  //   }
+  // };
+  const handleUpdateCustomer = async (customerId) => {
     const customer = customers.find((c) => c.id === customerId);
-    if (customer) {
+    if (!customer) return;
+
+    try {
       const newStatus = customer.status === 'Active' ? 'Inactive' : 'Active';
-      setCustomers(customers.map((c) => (c.id === customerId ? { ...c, status: newStatus } : c)));
+      const response = await fetch(`http://localhost:3000/api/users/update/${customerId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update customer');
+
+      setCustomers(customers.map((c) => 
+        c.id === customerId ? { ...c, status: newStatus } : c
+      ));
       alert(`Customer status updated to ${newStatus}`);
+    } catch (err) {
+      console.error('Update error:', err);
+      alert('Failed to update customer: ' + err.message);
     }
   };
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <Loader className="loading-spinner" />
+        <p>Loading customers...</p>
+      </div>
+    );
+  }
 
+  if (error) {
+    return (
+      <div className="error-container">
+        <p className="error-message">{error}</p>
+        <button onClick={fetchCustomers} className="btn-retry">
+          Retry
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="section-content">
             <h1 className="dashboard-title">Customers</h1>

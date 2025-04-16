@@ -1,8 +1,39 @@
 "use client"
 
-import { FileText, UserCog } from "lucide-react"
+import { FileText, UserCog, CheckCircle, XCircle } from "lucide-react"
+import { useState } from "react"
+
 
 export default function Verify({ pendingVerifications, handleApprove, handleReject }) {
+  const [processing, setProcessing] = useState(false)
+  const [activeId, setActiveId] = useState(null)
+
+  const onApprove = async (userId) => {
+    try {
+      setProcessing(true)
+      setActiveId(userId)
+      await handleApprove(userId)
+    } catch (error) {
+      console.error('Approve error:', error)
+    } finally {
+      setProcessing(false)
+      setActiveId(null)
+    }
+  }
+
+  const onReject = async (userId) => {
+    try {
+      setProcessing(true)
+      setActiveId(userId)
+      await handleReject(userId)
+    } catch (error) {
+      console.error('Reject error:', error)
+    } finally {
+      setProcessing(false)
+      setActiveId(null)
+    }
+  }
+
   return (
     <div className="section-content">
       <h1 className="dashboard-title">Verify Customers</h1>
@@ -39,15 +70,19 @@ export default function Verify({ pendingVerifications, handleApprove, handleReje
                   <div className="verification-actions">
                     <button 
                       className="btn-approve"
-                      onClick={() => handleApprove(user.id)}
+                      onClick={() => onApprove(user.id)}
+                      disabled={processing && activeId === user.id}
                     >
-                      Approve
+                      <CheckCircle size={16} />
+                      <span>{processing && activeId === user.id ? 'Approving...' : 'Approve'}</span>
                     </button>
                     <button 
                       className="btn-reject"
-                      onClick={() => handleReject(user.id)}
+                      onClick={() => onReject(user.id)}
+                      disabled={processing && activeId === user.id}
                     >
-                      Reject
+                      <XCircle size={16} />
+                      <span>{processing && activeId === user.id ? 'Rejecting...' : 'Reject'}</span>
                     </button>
                   </div>
                 </div>
@@ -57,4 +92,4 @@ export default function Verify({ pendingVerifications, handleApprove, handleReje
       </div>
     </div>
   )
-} 
+}

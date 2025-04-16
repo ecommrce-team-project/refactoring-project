@@ -4,6 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Download, Upload, X, Loader } from 'lucide-react';
 
+// Add this helper function at the top of your file, outside the component
+const getStockStatus = (quantity) => {
+  if (quantity <= 0) return 'Out of Stock';
+  if (quantity <= 5) return 'Low Stock';
+  return 'In Stock';
+};
+
 export default function Inventory() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -91,7 +98,6 @@ export default function Inventory() {
               <button className="btn-action">
                 <Upload size={16} /> Import
               </button>
-
             </div>
           </div>
           <div className="section-body">
@@ -114,19 +120,19 @@ export default function Inventory() {
                   <div className="inventory-stat">
                     <div className="inventory-stat-label">In Stock</div>
                     <div className="inventory-stat-value">
-                      {products.filter((p) => p.status === 'In Stock').length}
+                      {products.filter((p) => p.quantity > 5).length}
                     </div>
                   </div>
                   <div className="inventory-stat">
                     <div className="inventory-stat-label">Low Stock</div>
                     <div className="inventory-stat-value">
-                      {products.filter((p) => p.status === 'Low Stock').length}
+                      {products.filter((p) => p.quantity > 0 && p.quantity <= 5).length}
                     </div>
                   </div>
                   <div className="inventory-stat">
                     <div className="inventory-stat-label">Out of Stock</div>
                     <div className="inventory-stat-value">
-                      {products.filter((p) => p.status === 'Out of Stock').length}
+                      {products.filter((p) => p.quantity === 0).length}
                     </div>
                   </div>
                 </div>
@@ -137,7 +143,6 @@ export default function Inventory() {
                       <th>SKU</th>
                       <th>Status</th>
                       <th>Quantity</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -156,7 +161,9 @@ export default function Inventory() {
                         </td>
                         <td>SKU-{1000 + index}</td>
                         <td>
-                          <span className="status-badge">{product.status}</span>
+                          <span className={`status-badge ${getStockStatus(product.quantity).toLowerCase().replace(' ', '-')}`}>
+                            {getStockStatus(product.quantity)}
+                          </span>
                         </td>
                         <td>
                           <div className="quantity-controls">
@@ -190,11 +197,6 @@ export default function Inventory() {
                               +
                             </button>
                           </div>
-                        </td>
-                        <td>
-                          <button className="btn-sm" onClick={() => handleUpdateStock(product)}>
-                            Update Stock
-                          </button>
                         </td>
                       </tr>
                     ))}
