@@ -1,0 +1,523 @@
+/* General Container */
+.estate-details-container {
+  max-width: 1400px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Image Section */
+.estate-image-section :hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 
+              0 0 25px rgba(255, 215, 0, 0.8), /* Stronger glow effect */
+              0 0 50px rgba(255, 215, 0, 0.6);
+}
+
+.estate-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.estate-image:hover {
+  transform: scale(1.02);
+}
+
+/* Info Section */
+.estate-header-section {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  height: fit-content;
+}
+
+.estate-badges {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.price-badge {
+  background: #1a237e;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.type-badge {
+  background: #ff9800;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.estate-title {
+  font-size: 2.5rem;
+  color: #1a237e;
+  margin-bottom: 25px;
+  line-height: 1.2;
+}
+
+.estate-location {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.property-types {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.property-type {
+  padding: 10px 20px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  color: #666;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.property-type:hover {
+  background: #1a237e;
+  color: white;
+}
+
+.estate-specs {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 35px;
+  padding: 25px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.spec-item i {
+  font-size: 1.5rem;
+  color: #1a237e;
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.spec-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a237e;
+}
+
+.spec-label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.estate-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 35px;
+  padding: 25px;
+  background: #f8f9fa;
+  border-radius: 16px;
+}
+
+.info-item {
+  display: flex;
+  gap: 10px;
+}
+
+.info-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #1a237e;
+  font-weight: 600;
+}
+
+.estate-description {
+  margin-top: 35px;
+}
+
+.estate-description h3 {
+  color: #1a237e;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.estate-description p {
+  color: #666;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* Contact Button */
+.contact-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700, #facc15);
+  color: #111827;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-button:hover {
+  background: linear-gradient(135deg, #ffed4a, #fde047);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading */
+.loading {
+  font-size: 1.5rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* Estate Card */
+.estateCard {
+  background: #1a1a1a; /* Changed from white to dark */
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 48px 100px 0px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.estateCard:hover {
+  transform: translateY(-10px);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 48px 100px 0px;
+}
+
+.estateImage {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.estateImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.estateCard:hover .estateImage img {
+  transform: scale(1.1);
+}
+
+.locationBadge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.estateDetails {
+  padding: 25px;
+}
+
+.estateHeader {
+  margin-bottom: 20px;
+}
+
+.projectName {
+  font-size: 1.4rem;
+  color: #ffffff; /* Changed to white */
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.address {
+  color: #a3a3a3; /* Changed to lighter grey */
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.estateSpecs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px 0;
+  border-top: 1px solid #333333; /* Changed border color */
+  border-bottom: 1px solid #333333; /* Changed border color */
+  margin: 20px 0;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.specLabel {
+  font-size: 0.85rem;
+  color: #a3a3a3; /* Changed to lighter grey */
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.specValue {
+  font-weight: 600;
+  color: #ffffff; /* Changed to white */
+  font-size: 1.1rem;
+}
+
+.estatePrice {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.priceValue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  display: inline-block;
+}
+
+/* Card */
+.card {
+  background: #1a1a1a;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 48px 100px 0px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 48px 100px 0px;
+}
+
+.imageContainer {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.1);
+}
+
+.content {
+  padding: 25px;
+}
+
+.title {
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.location {
+  color: #a3a3a3;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px 0;
+  border-top: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  margin: 20px 0;
+}
+
+.spec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.specLabel {
+  font-size: 0.85rem;
+  color: #a3a3a3;
+  margin-bottom: 5px;
+}
+
+.specValue {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.price {
+  text-align: right;
+  margin-top: 20px;
+  color: #727272;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .estate-details-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .estate-image-section {
+    position: relative;
+    top: 0;
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .estate-specs {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .estate-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .estate-badges {
+    flex-wrap: wrap;
+  }
+
+  .estate-header-section {
+    padding: 25px;
+  }
+
+  .estate-title {
+    font-size: 2rem;
+  }
+
+  .estateImage {
+    height: 250px;
+  }
+  
+  .projectName {
+    font-size: 1.2rem;
+  }
+  
+  .estateSpecs {
+    gap: 10px;
+  }
+  
+  .priceValue {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+  }
+
+  .imageContainer {
+    height: 250px;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+  }
+  
+  .specs {
+    gap: 10px;
+  }
+}
+
+.singleEstateContainer {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #1a1a1a;
+  border-radius: 25px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.singleEstateContainer:hover {
+  transform: translateY(-10px);
+}
+
+.priceSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.viewButton {
+background-color: #f9ca11;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: rgb(88, 88, 88);
+  transition: all 0.3s ease;
+}
+
+.viewButton:hover {
+  
+  transform: translateY(-2px);
+}
+
+.viewButton:active {
+  transform: translateY(0);
+}
