@@ -156,7 +156,7 @@ export default function Dashboard() {
         console.log('Tentative de connexion à l\'API...')
         
         // Utiliser une URL relative
-        const response = await fetch('http://localhost:3000/api/estate/getall', {
+        const response = await fetch('http://localhost:3000/api/estates/getall', {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -206,7 +206,7 @@ export default function Dashboard() {
       try {
         setLoading(true)
         // Use the local API endpoint instead of a separate server
-        const response = await fetch("http://localhost:3000/api/estate/getall")
+        const response = await fetch("http://localhost:3000/api/estates/getall")
 
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`)
