@@ -30,7 +30,7 @@ const downPaymentRoutes = require("./routes/downPayment.routes");
 const categoryRoutes = require("./routes/category.routes");
 const contactRoutes = require("./routes/contact.routes");
 const estateRoutes = require("./routes/estate.routes");
-
+const dashboardRoute = require("./routes/dashboard.route");
 
 // Use routes
 app.use("/api/users", userRoutes);
@@ -39,7 +39,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/estates", estateRoutes);
 app.use("/api/down-payments", downPaymentRoutes);
-
+app.use("/api/dashboard", dashboardRoute);
 // Error handling
 app.use((req, res, next) => {
     next(createError.NotFound());

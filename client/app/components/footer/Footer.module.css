@@ -1,0 +1,54 @@
+.footer {
+  background: #1a1a1a;
+  padding: 4rem 0 2rem;
+  color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.section ul li a {
+  color: #a3a3a3;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.section ul li a:hover {
+  color: #ffffff;
+}
+
+.bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #333;
+  color: #a3a3a3;
+}
