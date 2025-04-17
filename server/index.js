@@ -18,10 +18,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(
-    cors({
-        origin: ["http://localhost:3001", "http://localhost:3005"],
-        credentials: true,
-    })
+  cors({
+    origin: [
+      "http://localhost:3001",
+      "http://localhost:3002",
+      "http://localhost:3005",
+    ],
+    credentials: true,
+  })
 );
 
 // Import routes
@@ -44,22 +48,22 @@ app.use("/api/dashboard", dashboardRoute);
 
 // Error handling
 app.use((req, res, next) => {
-    next(createError.NotFound());
+  next(createError.NotFound());
 });
 
 app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.json({
-        error: {
-            status: err.status || 500,
-            message: err.message,
-        },
-    });
+  res.status(err.status || 500);
+  res.json({
+    error: {
+      status: err.status || 500,
+      message: err.message,
+    },
+  });
 });
 
 // Start server
 app.listen(port, () => {
-    console.log(`Server running on http://127.0.0.1:${port}`);
+  console.log(`Server running on http://127.0.0.1:${port}`);
 });
 
 module.exports = app;
