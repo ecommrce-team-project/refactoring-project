@@ -7,6 +7,6 @@ const { initiateDownPayment, verifyPayment } = require('../controllers/downPayme
 router.post('/initiate', initiateDownPayment);
 
 // Verify payment - protected route
-router.get('/verify/:id', verifyPayment);
+router.put('/verify/:id', verifyPayment);
 
 module.exports = router; 
