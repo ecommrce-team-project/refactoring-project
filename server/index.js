@@ -1,27 +1,28 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const createError = require("http-errors");
+const path = require("path");
 require("dotenv").config({ path: "./utils/.env" });
 require("./database/index.js");
-const cors = require("cors");
-const cookieParser = require('cookie-parser');
-const createError = require("http-errors");
-const path = require('path');
 
+// Initialize app
 const app = express();
-
 const port = process.env.SERVER_PORT || 3000;
-
 
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
-app.use(cors({
-    origin: ["http://localhost:3001", "http://localhost:3005"],
-    credentials: true,
-}));
+app.use(
+    cors({
+        origin: ["http://localhost:3001", "http://localhost:3005"],
+        credentials: true,
+    })
+);
 
 // Import routes
 const userRoutes = require("./routes/user.routes");
@@ -40,6 +41,7 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/estates", estateRoutes);
 app.use("/api/down-payments", downPaymentRoutes);
 app.use("/api/dashboard", dashboardRoute);
+
 // Error handling
 app.use((req, res, next) => {
     next(createError.NotFound());
@@ -55,6 +57,7 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Start server
 app.listen(port, () => {
     console.log(`Server running on http://127.0.0.1:${port}`);
 });
