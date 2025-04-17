@@ -12,7 +12,7 @@ var path= require('path');
 const app = express();
  app.use(morgan("dev"));
 
-const port = 3000;
+ const port = process.env.SERVER_PORT || 3000;
 
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended:false}))
@@ -25,6 +25,7 @@ const paymentRouter = require("./routes/payment.routes.js");
 const categoryRoutes = require("./routes/Category.routes.js");
 const contactRoutes = require("./routes/Contact.routes.js");
 const estateRoutes = require("./routes/Estate.routes.js");
+const dashboardRoute = require("./routes/dashboard.route");
 
 
 app.use(express.json());
@@ -42,6 +43,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/estate", estateRoutes);
+app.use("/api/dashboard", dashboardRoute);
 
 app.use((req, res, next) => {
   next(createError.NotFound());
