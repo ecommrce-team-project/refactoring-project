@@ -30,5 +30,10 @@ module.exports = {
       "string.min": "Password must be at least 6 characters",
       "any.required": "Password is required"
     })
+  }),
+
+  resetPasswordSchema: joi.object({
+    email: joi.string().email().required(),
+    newPassword: joi.string().min(6).required(),
   })
 };

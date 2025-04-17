@@ -51,14 +51,22 @@
 }
 
 .signInButton {
-  background: linear-gradient(135deg, #dbbc0e, #a4890f 100%);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
+  background: black;
+  padding-bottom: 0.1rem;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: all 0.3s ease;
+  /* margin-left: 0.5rem;  */
 }
+
+.signInButton:hover {
+  background: #222;
+}
+
 .adminButton{
     background: linear-gradient(135deg, #dbbc0e, #a4890f 100%);
   color: white;
@@ -69,7 +77,81 @@
   transition: all 0.3s ease;
 }
 
-.signInButton:hover {
+
+.profile {
+  background: linear-gradient(135deg, #dbbc0e, #a4890f 100%);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 0.5rem;
+}
+
+.profile:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
+  box-shadow: 0 4px 12px rgba(219, 188, 14, 0.25);
+}
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: white;
+  color: #dc2626;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Optional: adds spacing between profile and logout buttons */
+}
+.logoutIcon {
+  width: 20px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.logoutButton:hover {
+  background: #fee2e2;
+  transform: translat
+}
+
+.alertContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  animation: slideIn 0.3s ease;
+}
+
+.alert {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.success {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
