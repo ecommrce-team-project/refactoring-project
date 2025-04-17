@@ -15,7 +15,13 @@ export default function OneEstatePage() {
       if (!params?.id) return;
       
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/estate/get/${params.id}`);
+        const res = await fetch(`http://localhost:3000/api/estates/${params.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
         if (!res.ok) throw new Error('Failed to fetch estate');
         const data = await res.json();
         setEstate(data);

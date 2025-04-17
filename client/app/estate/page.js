@@ -16,7 +16,13 @@ const EstatePage = () => {
   useEffect(() => {
     const fetchEstates = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/estate/getAll`);
+        const response = await fetch('http://localhost:3000/api/estates/getall', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
         if (!response.ok) {
           throw new Error('Failed to fetch estates');
         }

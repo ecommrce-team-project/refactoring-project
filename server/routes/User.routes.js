@@ -4,6 +4,7 @@ const {createUser,deleteUser,getAllUsers,getUserById,updateUser} = require("../c
 
 const router = express.Router();
 
+// Keep verification for regular user creation
 router.post("/create-user", verifyToken, createUser);
 router.get("/all-users", verifyToken, getAllUsers);
 router.get("/:id", verifyToken, getUserById);

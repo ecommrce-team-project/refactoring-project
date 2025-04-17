@@ -1,0 +1,294 @@
+.authBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.authSidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100vh;
+  background: #fff;
+  padding: 2rem;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.authSidebar h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.authSidebar form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.authSidebar input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.authSidebar input:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 0.2rem rgba(74, 108, 247, 0.25);
+  outline: none;
+}
+
+.authSidebar button {
+  padding: 0.8rem;
+  background-color:  #fbbf24;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.authSidebar button:hover {
+  background-color:  #fbbf24;
+  transform: translateY(-2px);
+}
+
+.authSidebar button:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.authSidebar p {
+  color: #4a6cf7;
+  cursor: pointer;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.authToggleText:hover {
+  color: #3a5ce5;
+  transition: color 0.3s ease;
+}
+
+/* Sign-up form specific styles */
+.authSidebar form div {
+  margin-bottom: 1rem;
+}
+
+.authSidebar form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.authSidebar form input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.authSidebar form input::placeholder {
+  color: #aaa;
+}
+
+.authSidebar form button {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Alert styling */
+.alert {
+  position: relative;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: center;
+  z-index: 2;
+}
+
+.success {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Loading indicator */
+.loading {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+/* Alert styling - increased specificity */
+.authSidebar .alert {
+  padding: 12px 16px;
+  margin: 0 0 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.authSidebar .success {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.authSidebar .error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+/* Remove conflicting alert classes */
+.authSidebar .alert-danger,
+.authSidebar .alert-success {
+  display: none;
+}
+
+/* Remove any conflicting styles */
+.authSidebar .alert-success,
+.authSidebar .alert-danger {
+  display: none;
+}
+
+.forgotPassword {
+  text-align: right;
+  margin: 0.5rem 0 1rem;
+}
+
+.forgotPassword a {
+  color: #4a6cf7;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgotPassword a:hover {
+  color: #3a5ce5;
+  text-decoration: underline;
+}
+
+.authToggleText {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.authToggleText a {
+  color: #4a6cf7;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.authToggleText a:hover {
+  color: #3a5ce5;
+  text-decoration: underline;
+}
+
+.passwordStrength {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.weak {
+  color: #dc2626;
+  background-color: #fee2e2;
+}
+
+.medium {
+  color: #d97706;
+  background-color: #fef3c7;
+}
+
+.strong {
+  color: #059669;
+  background-color: #d1fae5;
+}
+
+.strengthIndicator {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background-color: #f8fafc;
+}
+
+.strengthText {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.strengthLabel {
+  font-weight: 600;
+}
+
+.strengthLabel.weak {
+  color: #dc2626;
+}
+
+.strengthLabel.medium {
+  color: #d97706;
+}
+
+.strengthLabel.strong {
+  color: #059669;
+}
+
+.strengthBars {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.bar {
+  height: 4px;
+  flex: 1;
+  border-radius: 2px;
+  background-color: #e2e8f0;
+  transition: background-color 0.3s ease;
+}
+
+.weak1 {
+  background-color: #dc2626;
+}
+
+.medium1, .medium2 {
+  background-color: #d97706;
+}
+
+.strong1, .strong2, .strong3 {
+  background-color: #059669;
+}

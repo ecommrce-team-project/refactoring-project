@@ -4,7 +4,7 @@ import Nav from '../app/components/navbar/Nav.js'
 import Footer from './components/footer/Footer';
 
 import "./globals.css";
-
+import { AuthProvider } from "./Context/AuthContext";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,12 +33,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <AuthProvider>
         <Nav />
         <main style={{ paddingTop: '80px' }}>
           {children}
         </main>
         <Footer />
-
+        </AuthProvider>
       </body>
     </html>
   );
