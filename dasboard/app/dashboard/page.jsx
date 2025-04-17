@@ -148,84 +148,89 @@ export default function Dashboard() {
     setNotificationsOpen(!notificationsOpen)
   }
 
-  // Fetch estates data
-  useEffect(() => {
-    const fetchEstates = async () => {
-      try {
-        setLoading(true)
-        console.log('Tentative de connexion à l\'API...')
-        
-        // Utiliser une URL relative
-        const response = await fetch('http://localhost:3000/api/estates/getall', {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include' // Inclure les cookies si nécessaire
-        })
-        
-        console.log('Statut de la réponse:', response.status)
-        console.log('Headers de la réponse:', response.headers)
-        
-        if (!response.ok) {
-          const errorText = await response.text()
-          console.error('Réponse d\'erreur:', errorText)
-          throw new Error(`Erreur HTTP: ${response.status} - ${errorText}`)
-        }
-        
-        const data = await response.json()
-        console.log('Données reçues:', data)
-        
-        if (!data || data.length === 0) {
-          console.log('Aucun bien immobilier trouvé dans la réponse')
-          setEstates([])
-          setError('Aucun bien immobilier disponible pour le moment.')
-        } else {
-          setEstates(data)
-          setError(null)
-        }
-      } catch (error) {
-        console.error('Erreur détaillée:', error)
-        if (error.message.includes('Failed to fetch')) {
-          setError('Impossible de se connecter au serveur. Veuillez vérifier que le serveur est en cours d\'exécution.')
-        } else {
-          setError(`Erreur: ${error.message}`)
-        }
-      } finally {
-        setLoading(false)
+  // Update fetchEstates function
+  const fetchEstates = async () => {
+    try {
+      setLoading(true);
+      console.log('Fetching estates...');
+      
+      const response = await fetch('http://localhost:3000/api/estates/getall');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    }
-
-    fetchEstates()
-  }, [])
-
-  // Fetch products data
-  useEffect(() => {
-    const fetchProducts = async () => {
+      
+      const text = await response.text();
+      console.log('Raw response:', text);
+      
+      let data;
       try {
-        setLoading(true)
-        // Use the local API endpoint instead of a separate server
-        const response = await fetch("http://localhost:3000/api/estates/getall")
-
-        if (!response.ok) {
-          throw new Error(`API request failed with status ${response.status}`)
-        }
-
-        const data = await response.json()
-        setProducts(data)
-        setError(null)
-      } catch (err) {
-        console.error("Error fetching products:", err)
-        setError("Failed to load products. Using fallback data.")
-       
-      } finally {
-        setLoading(false)
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('JSON parse error:', e);
+        throw new Error('Invalid JSON response from server');
       }
+      
+      console.log('Estates fetched successfully:', data);
+      setEstates(data);
+      setError(null);
+      
+    } catch (error) {
+      console.error('Failed to fetch estates:', error);
+      setError(error.message);
+      setEstates([]);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    fetchProducts()
-  }, [])
+  // Update fetchProducts function
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      console.log('Fetching products...');
+      
+      const response = await fetch('http://localhost:3000/api/estates/getall');
+      
+      // First check if response is ok before trying to parse JSON
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      // Log raw response for debugging
+      const text = await response.text();
+      console.log('Raw response:', text);
+      
+      // Try to parse JSON
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('JSON parse error:', e);
+        throw new Error('Invalid JSON response from server');
+      }
+      
+      console.log('Products fetched successfully:', data);
+      setProducts(data);
+      setError(null);
+      
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+      setError(error.message);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update the useEffect hooks
+  useEffect(() => {
+    fetchEstates();
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   // Initialize dark mode on component mount
   useEffect(() => {
