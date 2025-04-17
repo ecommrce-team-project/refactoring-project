@@ -736,7 +736,7 @@ export default function Dashboard() {
               <img src="/images/avatar.jpg" alt="User" className="user-avatar" />
               <div className="user-info">
                 <span className="user-name">Admin</span>
-                <span className="user-role">Administrator</span>
+               
             </div>
           </div>
         </div>

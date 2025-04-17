@@ -1,15 +1,53 @@
 "use client"
 
 import { Edit, PlusCircle, Search, Trash, Loader } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export default function Products({ 
   products, 
   loading, 
   error, 
   handleAddProduct, 
-  handleEditProduct, 
-  handleDeleteProduct 
+  handleEditProduct 
 }) {
+  const [localProducts, setProducts] = useState([])
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [productToDelete, setProductToDelete] = useState(null)
+
+  useEffect(() => {
+    setProducts(products || [])
+  }, [products])
+
+  const confirmDelete = (id) => {
+    setProductToDelete(id)
+    setShowConfirm(true)
+  }
+
+  const handleDeleteConfirmed = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/estate/remov/${productToDelete}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to delete product')
+      }
+
+      const updatedProducts = localProducts.filter(product => product.id !== productToDelete)
+      setProducts(updatedProducts)
+
+      setShowConfirm(false)
+      setProductToDelete(null)
+
+    } catch (error) {
+      console.error('Error deleting product:', error)
+      alert('Failed to delete product. Please try again.')
+    }
+  }
+
   return (
     <div className="section-content">
       <h1 className="dashboard-title">Products</h1>
@@ -51,14 +89,14 @@ export default function Products({
                 </tr>
               </thead>
               <tbody>
-                {products.length === 0 ? (
+                {localProducts.length === 0 ? (
                   <tr>
                     <td colSpan="5" className="text-center">
                       No products found
                     </td>
                   </tr>
                 ) : (
-                  products.map((product) => (
+                  localProducts.map((product) => (
                     <tr key={product.id}>
                       <td>
                         <div className="product-info">
@@ -89,7 +127,8 @@ export default function Products({
                           </button>
                           <button 
                             className="action-btn delete" 
-                            onClick={() => handleDeleteProduct(product.id)}
+                            onClick={() => confirmDelete(product.id)}
+                            title="Delete product"
                           >
                             <Trash size={16} />
                           </button>
@@ -103,6 +142,19 @@ export default function Products({
           )}
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h2>Are you sure you want to delete this product?</h2>
+            <div className="modal-actions">
+              <button onClick={handleDeleteConfirmed} className="btn-danger">Yes, Delete</button>
+              <button onClick={() => setShowConfirm(false)} className="btn-secondary">Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

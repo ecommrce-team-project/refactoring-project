@@ -72,39 +72,8 @@ export default function Analytics({
     <div className="section-content">
       <h1 className="dashboard-title">Analytics</h1>
       
-      <div className="analytics-grid">
-        <div className="analytics-card">
-          <div className="analytics-header">
-            <h3>Sales Overview</h3>
-            <BarChart2 size={24} />
-          </div>
-          <div className="analytics-chart">
-            {/* Sales chart will be implemented here */}
-            <div className="chart-placeholder">
-              <BarChart2 size={48} />
-              <p>Sales chart will be displayed here</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="analytics-card">
-          <div className="analytics-header">
-            <h3>Customer Growth</h3>
-            <TrendingUp size={24} />
-          </div>
-          <div className="analytics-chart">
-            <BarChart
-              dataset={dataset}
-              xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
-              series={[
-                { dataKey: 'customers', label: 'Customers', valueFormatter: (value) => `${value}` }
-              ]}
-              {...chartSetting}
-            />
-          </div>
-        </div>
-
-        <div className="analytics-card">
+      <div className="analytics-flex">
+        <div className="analytics-card pie-chart-card">
           <div className="analytics-header">
             <h3>Product Distribution</h3>
           </div>
@@ -122,24 +91,28 @@ export default function Analytics({
                     faded: { innerRadius: 30, additionalRadius: -30 },
                   },
                 ]}
-                width={600}
-                height={200}
+                width={700}
+                height={300}
               />
             )}
           </div>
         </div>
-      </div>
 
-      <div className="analytics-summary">
-        <div className="summary-card">
-          <h4>Total Sales</h4>
-          <p className="summary-value">${salesData?.total || 0}</p>
-          <p className="summary-change positive">+12% from last month</p>
-        </div>
-        <div className="summary-card">
-          <h4>Top Product</h4>
-          <p className="summary-value">{productData?.top || "N/A"}</p>
-          <p className="summary-change positive">+20% sales increase</p>
+        <div className="analytics-card bar-chart-card">
+          <div className="analytics-header">
+            <h3>Customer Growth</h3>
+            <TrendingUp size={24} />
+          </div>
+          <div className="analytics-chart">
+            <BarChart
+              dataset={dataset}
+              xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+              series={[
+                { dataKey: 'customers', label: 'Customers', valueFormatter: (value) => `${value}` }
+              ]}
+              {...chartSetting}
+            />
+          </div>
         </div>
       </div>
     </div>
