@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addcontact , getAllcontacts } = require('../controllers/Contactus.conrolles.js');
+const { addcontact , getAllcontacts } = require('../controllers/Contactus.controller.js');
 
 
 router.get('/getall',getAllcontacts)
