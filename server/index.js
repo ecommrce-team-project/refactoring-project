@@ -8,26 +8,9 @@ const createError = require("http-errors");
 const path = require('path');
 
 const app = express();
-<<<<<<< HEAD
+
 const port = process.env.SERVER_PORT || 3000;
-=======
- app.use(morgan("dev"));
 
-const port = 3000;
-
-app.use(morgan('dev'))
-app.use(express.urlencoded({extended:false}))
-app.use(express.static(path.join(__dirname,'public')))
-
-
-const userRoutes = require("./routes/User.routes.js");
-const authRoutes = require("./routes/Auth.routes.js");
-const paymentRouter = require("./routes/payment.routes.js");
-const categoryRoutes = require("./routes/Category.routes.js");
-const contactRoutes = require("./routes/Contact.routes.js");
-const estateRoutes = require("./routes/Estate.routes.js");
-
->>>>>>> f92dc3c12d8f2cf3899f66af6725b629a3d00eb5
 
 // Middleware
 app.use(morgan("dev"));
