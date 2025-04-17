@@ -24,7 +24,7 @@ const EstateManagement = ({ darkMode }) => {
 
   const fetchEstates = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/estate/getall");
+      const response = await fetch("http://localhost:3000/api/estates/getall");
       if (!response.ok) throw new Error("Failed to fetch estates");
       const data = await response.json();
       setEstates(data);
@@ -51,8 +51,8 @@ const EstateManagement = ({ darkMode }) => {
     e.preventDefault();
     try {
       const url = isEditing
-        ? `http://localhost:3000/api/dashboard/estates/${editingId}`
-        : "http://localhost:3000/api/dashboard/estates";
+        ? `http://localhost:3000/api/estates/update/${editingId}`
+        : "http://localhost:3000/api/estates/create";
 
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",
@@ -94,7 +94,7 @@ const EstateManagement = ({ darkMode }) => {
 
     try {
       const response = await fetch(
-       `http://localhost:3000/api/dashboard/estates/${id}`,
+       `http://localhost:3000/api/estates/remov/${id}`,
         {
           method: "DELETE",
           headers: {

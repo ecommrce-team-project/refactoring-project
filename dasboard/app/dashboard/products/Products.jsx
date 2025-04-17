@@ -1,5 +1,3 @@
-"use client"
-
 import { Edit, PlusCircle, Search, Trash, Loader } from "lucide-react"
 import { useState, useEffect } from "react"
 
@@ -13,6 +11,7 @@ export default function Products({
   const [localProducts, setProducts] = useState([])
   const [showConfirm, setShowConfirm] = useState(false)
   const [productToDelete, setProductToDelete] = useState(null)
+  const [editProduct, setEditProduct] = useState(null)  // Add a state to handle editing
 
   useEffect(() => {
     setProducts(products || [])
@@ -25,7 +24,7 @@ export default function Products({
 
   const handleDeleteConfirmed = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/estate/remov/${productToDelete}`, {
+      const response = await fetch(`http://localhost:3000/api/estates/remov/${productToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -48,6 +47,35 @@ export default function Products({
     }
   }
 
+  const handleEditClick = (product) => {
+    setEditProduct(product)  // open modal and pass the selected product
+  }
+
+  const handleEditSubmit = async (updatedProduct) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/estates/update/${updatedProduct.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedProduct),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update product')
+      }
+
+      const updatedProducts = localProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      )
+      setProducts(updatedProducts)
+      setEditProduct(null)  // Close the modal after update
+    } catch (error) {
+      console.error('Error updating product:', error)
+      alert('Failed to update product. Please try again.')
+    }
+  }
+
   return (
     <div className="section-content">
       <h1 className="dashboard-title">Products</h1>
@@ -59,10 +87,7 @@ export default function Products({
               <Search size={16} />
               <input type="text" placeholder="Search products..." />
             </div>
-            <button 
-              className="btn-action"
-              onClick={handleAddProduct}
-            >
+            <button className="btn-action" onClick={handleAddProduct}>
               <PlusCircle size={16} /> Add Product
             </button>
           </div>
@@ -91,9 +116,7 @@ export default function Products({
               <tbody>
                 {localProducts.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="text-center">
-                      No products found
-                    </td>
+                    <td colSpan="5" className="text-center">No products found</td>
                   </tr>
                 ) : (
                   localProducts.map((product) => (
@@ -113,22 +136,19 @@ export default function Products({
                         </div>
                       </td>
                       <td>${product.price}</td>
-                      <td>
-                        <span className="status-badge">Active</span>
-                      </td>
+                      <td><span className="status-badge">Active</span></td>
                       <td>{product.Category?.name || "Uncategorized"}</td>
                       <td>
                         <div className="actions">
                           <button 
                             className="action-btn edit" 
-                            onClick={() => handleEditProduct(product.id)}
+                            onClick={() => handleEditClick(product)}
                           >
                             <Edit size={16} />
                           </button>
                           <button 
                             className="action-btn delete" 
                             onClick={() => confirmDelete(product.id)}
-                            title="Delete product"
                           >
                             <Trash size={16} />
                           </button>
@@ -142,6 +162,84 @@ export default function Products({
           )}
         </div>
       </div>
+
+      {/* Edit Product Modal */}
+      {editProduct && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <h2>Edit Product</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleEditSubmit(editProduct) // Submit the updated product details
+              }}
+            >
+              <div>
+                <label>Product Title</label>
+                <input
+                  type="text"
+                  value={editProduct.title}
+                  onChange={(e) =>
+                    setEditProduct((prev) => ({ ...prev, title: e.target.value }))
+                  }
+                />
+              </div>
+              <div>
+                <label>Price</label>
+                <input
+                  type="number"
+                  value={editProduct.price}
+                  onChange={(e) =>
+                    setEditProduct((prev) => ({ ...prev, price: e.target.value }))
+                  }
+                />
+              </div>
+              <div>
+                <label>Category</label>
+                <select
+                  value={editProduct.categoryId || ""}
+                  onChange={(e) =>
+                    setEditProduct((prev) => ({ ...prev, categoryId: e.target.value }))
+                  }
+                >
+                  <option value="">Select Category</option>
+                  {/* Add your categories dynamically here */}
+                  <option value="1">Category 1</option>
+                  <option value="2">Category 2</option>
+                </select>
+              </div>
+              <div>
+                <label>Product Image URL</label>
+                <input
+                  type="text"
+                  value={editProduct.image_url || ''}
+                  onChange={(e) =>
+                    setEditProduct((prev) => ({ ...prev, image_url: e.target.value }))
+                  }
+                />
+              </div>
+              {/* Show image preview */}
+              <div>
+                {editProduct.image_url && (
+                  <img
+                    src={editProduct.image_url}
+                    alt="Product Preview"
+                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  />
+                )}
+              </div>
+              <button type="submit" className="btn-primary">Update Product</button>
+              <button
+                type="button"
+                onClick={() => setEditProduct(null)} // Close modal
+                className="btn-secondary"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Confirmation Modal */}
       {showConfirm && (

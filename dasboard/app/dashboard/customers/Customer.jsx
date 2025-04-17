@@ -5,22 +5,7 @@ import Link from 'next/link';
 import { Edit, Trash, PlusCircle, UserCog,Loader } from 'lucide-react';
 
 export default function Customers() {
-  // const [customers, setCustomers] = useState([
-  //   {
-  //     id: 1,
-  //     name: 'John Doe',
-  //     email: 'john.doe@example.com',
-  //     status: 'Active',
-  //     joined: 'Jan 15, 2023',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Jane Smith',
-  //     email: 'jane.smith@example.com',
-  //     status: 'Active',
-  //     joined: 'Feb 22, 2023',
-  //   },
-  // ]);
+
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
