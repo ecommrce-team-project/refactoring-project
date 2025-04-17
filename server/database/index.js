@@ -25,6 +25,7 @@ const User = require('../models/User.model')(sequelize, DataTypes);
 const Estate = require('../models/Estate.model')(sequelize, DataTypes);
 const Category = require('../models/Categorie.model')(sequelize, DataTypes);
 const Contact = require('../models/Contactus.models')(sequelize, DataTypes);
+const DownPayment = require('../models/DownPayment.model')(sequelize, DataTypes);
 
 Category.hasMany(Estate, { foreignKey: 'category_id' });
 Estate.belongsTo(Category, { foreignKey: 'category_id' });
@@ -33,6 +34,12 @@ Estate.belongsTo(Category, { foreignKey: 'category_id' });
 User.hasMany(Contact, { foreignKey: 'user_id' });
 Contact.belongsTo(User, { foreignKey: 'user_id' });
 
+// RELATIONS FOR DOWN PAYMENTS
+User.hasMany(DownPayment, { foreignKey: 'user_id' });
+DownPayment.belongsTo(User, { foreignKey: 'user_id' });
+
+Estate.hasMany(DownPayment, { foreignKey: 'estate_id' });
+DownPayment.belongsTo(Estate, { foreignKey: 'estate_id' });
 
 // sequelize
 //   .sync({ force: true })
@@ -44,5 +51,4 @@ Contact.belongsTo(User, { foreignKey: 'user_id' });
 //     console.error("Error synchronizing tables:", err);
 //   });
 
-
-module.exports = { sequelize, Estate, Category, User , Contact};
+module.exports = {sequelize,Estate, Category, User, Contact, DownPayment};
