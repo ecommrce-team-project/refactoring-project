@@ -1,10 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const DownPayment = sequelize.define('DownPayment', {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
+   
     amount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
