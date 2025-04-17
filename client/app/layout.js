@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
+
 import Nav from '../app/components/navbar/Nav.js'
 import Footer from './components/footer/Footer';
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,13 +16,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+
   title: "DARNA - Find Your Perfect Home",
   description: "Discover your dream property with DARNA",
+
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+
       <head>
         <link 
           rel="stylesheet" 
@@ -33,6 +38,7 @@ export default function RootLayout({ children }) {
           {children}
         </main>
         <Footer />
+
       </body>
     </html>
   );
