@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import OneEstate from '../onestate/oneEstate';
+import Image from 'next/image';
 import styles from './estate.module.css';
 
 const EstatePage = () => {
@@ -10,6 +11,8 @@ const EstatePage = () => {
   const [filteredEstates, setFilteredEstates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedEstate, setSelectedEstate] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const category = searchParams.get('category');
@@ -43,7 +46,43 @@ const EstatePage = () => {
     setFilteredEstates(filtered);
   };
 
+  const handleEstateClick = async (estateId) => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/estate/get/${estateId}`);
+      const data = await res.json();
+      setSelectedEstate(data);
+      setShowDetails(true);
+    } catch (error) {
+      console.error('Error fetching estate details:', error);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
+
+  if (showDetails && selectedEstate) {
+    return (
+      <div className={styles.detailsView}>
+        <button 
+          className={styles.backButton}
+          onClick={() => setShowDetails(false)}
+        >
+          ← Back to Listings
+        </button>
+        <div className={styles.estateDetailsContainer}>
+          <div className={styles.estateImageSection}>
+            <Image 
+              src={selectedEstate.image_url} 
+              alt={selectedEstate.title} 
+              className={styles.estateImage}
+              width={1200}
+              height={600}
+            />
+          </div>
+          {/* ...rest of the estate details content... */}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -73,6 +112,7 @@ const EstatePage = () => {
           <OneEstate 
             key={estate.id} 
             estate={estate}
+            onClick={() => handleEstateClick(estate.id)}
           />
         ))}
       </div>
@@ -86,3 +126,11 @@ const EstatePage = () => {
 };
 
 export default EstatePage;
+
+// Directory structure:
+// app/
+//   page.js
+//   estate/
+//     page.js      // This will be your /estate route
+//     [id]/        // For dynamic routes
+//       page.js    // This will handle individual estate pages
