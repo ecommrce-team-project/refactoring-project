@@ -370,7 +370,7 @@ const AuthSidebar = ({ isOpen, onClose }) => {
                 {isLogin ? (
                   <form onSubmit={handleSubmit}>
                     <div>
-                      <label htmlFor="identifier">Username or Email</label>
+                      <label htmlFor="identifierU">Usnearmnea mer  or Email</label>
                       <input
                         type="text"
                         id="identifier"
