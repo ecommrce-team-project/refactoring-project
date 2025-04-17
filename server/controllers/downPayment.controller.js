@@ -50,21 +50,20 @@ module.exports = {
       console.log('Flouci response:', response); // Log the response for debugging
 
       // Create down payment record
-      const { payment_url, payment_id } = response.data.result;
+      const { link, payment_id } = response.data.result;
 
       const downPayment = await DownPayment.create({
         user_id: userId,
         estate_id: estateId,
         amount: downPaymentAmount,
-        status: 'pending',
-        payment_url,
+        payment_url:link,
         transaction_id: payment_id // Save Flouci’s ID here
       });
 
 
       res.status(201).json({
         message: 'Down payment initiated',
-        payment_url: response.data.result.payment_url,
+        payment_url: response.data.result.link,
         downPaymentId: downPayment.id
       });
 
@@ -77,9 +76,24 @@ module.exports = {
     }
   },
   verifyPayment: async (req, res) => {
+  
+    
     try {
-      const { paymentId } = req.params;
-
+      const  downPaymentId  = req.params.id;
+  
+      // Find the DownPayment record by its ID
+      const downPayment = await DownPayment.findByPk(downPaymentId);
+      console.log("downPayment", downPayment.BASE_URL);
+      if (!downPayment) {
+        return res.status(404).json({ error: 'Down payment not found' });
+      }
+  
+      const paymentId = downPayment.transaction_id;
+      if (!paymentId) {
+        return res.status(400).json({ error: 'No transaction ID associated with this down payment' });
+      }
+  
+      // Verify payment using Flouci API
       const verification = await axios.get(
         `https://developers.flouci.com/api/verify_payment/${paymentId}`,
         {
@@ -90,21 +104,23 @@ module.exports = {
           }
         }
       );
-
-      // Update payment status
-      const downPayment = await DownPayment.findOne({
-        where: { payment_url: { [Op.like]: `%${paymentId}%` } }
-      });
-
-      if (downPayment) {
-        await downPayment.update({
-          status: verification.data.result.status,
-          transaction_id: paymentId
-        });
+      if (verification.data.success) {
+        verification.data.result.status= 'paid';
+      }else{
+        verification.data.result.status= 'failed';
       }
-
-      res.status(200).json(verification.data);
-
+  
+      // Update the down payment status
+      await downPayment.update({
+        status: verification.data.result.status
+      });
+  
+      res.status(200).json({
+        message: 'Payment verification completed',
+        status: verification.data.result.status,
+        flouciResponse: verification.data
+      });
+  
     } catch (error) {
       console.error('Verification error:', error.response?.data || error.message);
       res.status(500).json({
@@ -113,4 +129,5 @@ module.exports = {
       });
     }
   }
+  
 }
