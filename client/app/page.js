@@ -2,14 +2,13 @@
 'use client';
 
 import styles from "./page.module.css";
-import Estate from "./estate/estate/estate"
+import EstateDetails from "./estate/estateDetails/estateDetails";
 
-
-export default function home() {
+export default function Home() {
   return (
-    // <div className={styles.page}>
-      <Estate />
-    // </div>
+    
+      <EstateDetails isHomePage={true} />
+ 
   );
 }
 

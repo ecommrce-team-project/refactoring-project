@@ -10,7 +10,6 @@
   background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-y: hidden
-
 }
 
 /* Image Section */
@@ -247,4 +246,239 @@
   .estate-title {
     font-size: 2rem;
   }
+}
+
+/* Home Page */
+.homePage {
+  min-height: 100vh;
+  background-color: #111111;
+  overflow-x: hidden;
+  color: #fff;
+}
+
+.heroSection {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
+
+.heroImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.4) saturate(1.2);
+  transform: scale(1.1);
+  animation: slowZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom {
+  from { transform: scale(1.1); }
+  to { transform: scale(1.2); }
+}
+
+.heroContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  width: 90%;
+  max-width: 1000px;
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -40%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.heroContent h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  background: linear-gradient(45deg, #ffd700, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+  letter-spacing: -1px;
+}
+
+.heroContent p {
+  font-size: 1.4rem;
+  margin-bottom: 3rem;
+  color: #e5e7eb;
+  line-height: 1.6;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.viewPropertiesBtn {
+  padding: 1.2rem 3rem;
+  font-size: 1.2rem;
+  background: linear-gradient(135deg, #ffd700, #facc15);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.viewPropertiesBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  background: linear-gradient(135deg, #facc15, #eab308);
+}
+
+.featuresSection {
+  padding: 8rem 2rem;
+  text-align: center;
+  background: #1a1a1a;
+  position: relative;
+}
+
+.featuresSection::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: #111111;
+  transform: skewY(-2deg);
+}
+
+.featuresSection h2 {
+  margin-bottom: 4rem;
+  font-size: 3rem;
+  color: #fff;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.featuresSection h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #facc15);
+  border-radius: 2px;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.featureCard {
+  padding: 3rem 2rem;
+  background-color: #1f1f1f;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.featureCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #ffd700, #facc15);
+  transition: all 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  background-color: #2a2a2a;
+}
+
+.featureCard:hover::before {
+  width: 100%;
+  opacity: 0.1;
+}
+
+.featureCard h3 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.featureCard p {
+  color: #e5e7eb;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .heroContent h1 {
+    font-size: 3rem;
+  }
+
+  .heroContent p {
+    font-size: 1.2rem;
+  }
+
+  .viewPropertiesBtn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  .featuresSection {
+    padding: 6rem 1rem;
+  }
+
+  .featuresSection h2 {
+    font-size: 2.5rem;
+  }
+
+  .featureGrid {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroContent h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroContent p {
+    font-size: 1.1rem;
+  }
+}
+
+.estateImageSection {
+  position: relative;
+}
+
+.estateImageSection::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
