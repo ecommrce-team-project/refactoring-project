@@ -1,9 +1,11 @@
 require('dotenv').config();
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
+const nodemailer =require ("nodemailer");
 const { User } = require("../database/index");
-const { authSchema, loginSchema } = require("../helpers/validation_schema.js");
+const { authSchema, loginSchema, resetPasswordSchema } = require("../helpers/validation_schema.js");
 const { signToken } = require('../helpers/jwt_helper.js');
+
 // Cookie options
 const cookieOptions = {
     httpOnly: true,
@@ -137,3 +139,39 @@ exports.logout = async (req, res) => {
     res.clearCookie("token", { ...cookieOptions, maxAge: 0 });
     res.json({ message: "Logged out successfully" });
 };
+
+module.exports.resetPassword = async (req, res) => {
+  
+  try {
+    // Validate input
+    const { error, value } = resetPasswordSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    const { email, newPassword } = value;
+    
+    // Find the user
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the password
+    await user.update({ password: hashedPassword });
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Password reset error:', error);
+    res.status(500).json({ 
+      message: 'Error resetting password',
+      error: error.message 
+    });
+  }
+  
+};
+

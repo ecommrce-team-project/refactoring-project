@@ -18,14 +18,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: [
-      "http://localhost:3001",
-      "http://localhost:3002",
-      "http://localhost:3005",
-    ],
-    credentials: true,
-  })
+    cors({
+        origin: ["http://localhost:3001", "http://localhost:3002","http://localhost:3005"],
+        credentials: true,
+        
+    })
 );
 
 // Import routes

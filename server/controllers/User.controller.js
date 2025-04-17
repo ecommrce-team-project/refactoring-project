@@ -1,16 +1,16 @@
 const { where } = require('sequelize');
 const { User } = require('../database/index.js');
 const { isAdmin } = require('../middlewares/Auth.middleware.js');
-
 // Controller for handling user-related operations
 const UserController = {
+    // Create a new user
     createUser: async (req, res) => {
         try {
-            const { name, email, password, role } = req.body;
+            const { username, email, password, role } = req.body;
             if (!req.user || req.user.role !== "admin") {
                 return res.status(403).json({ message: "Unauthorized action" });
             }
-            const user = await User.create({ name, email, password, role });
+            const user = await User.create({ username, email, password, role });
             res.status(201).json({ message: "User created successfully", user });
         } catch (error) {
             res.status(500).json({ message: "Error creating user", error });
