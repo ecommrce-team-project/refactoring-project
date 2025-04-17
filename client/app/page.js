@@ -1,10 +1,15 @@
-"use client";
-import styles from "./page.module.css";
-import React,{ useState } from "react";
 
-export default function Home() {
- 
+'use client';
+
+import styles from "./page.module.css";
+import Estate from "./estate/estate/estate"
+
+
+export default function home() {
   return (
-  <h1>test</h1>
+    // <div className={styles.page}>
+      <Estate />
+    // </div>
   );
 }
+

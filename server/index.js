@@ -11,7 +11,9 @@ var path= require('path');
 
 const app = express();
  app.use(morgan("dev"));
-const port = process.env.SERVER_PORT || 3000;
+
+const port = 3000;
+
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended:false}))
 app.use(express.static(path.join(__dirname,'public')))

@@ -120,23 +120,24 @@ export default function ProfilePage() {
       </div>
     );
   }
-
-  if (!user) {
-    return (
-      <div className={styles.centerContainer}>
-        <div className={styles.errorCard}>
-          <h2>Access Denied</h2>
-          <p>Please login to view your profile</p>
-          <button 
-            onClick={() => router.push('/')}
-            className={styles.backButton}
-          >
-            Back to Home
-          </button>
-        </div>
-      </div>
-    );
-  }
+//if you want to enable this just delete the comment
+//this is test to see if not login or register then you will not see profile 
+  // if (!user) {
+  //   return (
+  //     <div className={styles.centerContainer}>
+  //       <div className={styles.errorCard}>
+  //         <h2>Access Denied</h2>
+  //         <p>Please login to view your profile</p>
+  //         <button 
+  //           onClick={() => router.push('/')}
+  //           className={styles.backButton}
+  //         >
+  //           Back to Home
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={`${styles.profilePage} bg-light min-vh-100`}>

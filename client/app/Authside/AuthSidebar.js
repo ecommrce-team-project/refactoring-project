@@ -64,8 +64,7 @@ const AuthSidebar = ({ isOpen, onClose }) => {
     confirmPassword: ''
   });
 
-  useEffect(() => {
-    // Reset form on mode switch
+  const handleFormReset = () => {
     setForm({
       username: "",
       email: "",
@@ -74,7 +73,22 @@ const AuthSidebar = ({ isOpen, onClose }) => {
     });
     setAlert({ type: '', message: '' });
     setPasswordStrength('');
-  }, [isLogin]);
+    setIsLogin(true);
+  };
+
+  // Add to window object for external access
+  useEffect(() => {
+    window.resetAuthForm = handleFormReset;
+    return () => {
+      delete window.resetAuthForm;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      handleFormReset();
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleEsc = (e) => {

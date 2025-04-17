@@ -51,10 +51,14 @@ export const AuthProvider = ({ children }) => {
         withCredentials: true
       });
       setUser(null);
+      // Clear any stored form data
+      localStorage.removeItem('authForm');
+      sessionStorage.clear();
       router.refresh();
       router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);
+      throw error; // Propagate error to handle in component
     }
   };
 
