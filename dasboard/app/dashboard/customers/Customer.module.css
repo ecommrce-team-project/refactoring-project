@@ -1,0 +1,81 @@
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user_avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.inactive {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.action-btn.edit {
+  color: #000000;
+}
+
+.action-btn.delete {
+  color: #ef4444;
+}
+
+.user_name {
+  color: #050505; /* Deep blue color */
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.user_name:hover {
+  color: #f90000; /* Lighter blue on hover */
+}
+
+.user_email {
+  color: #64748b; /* Slate gray */
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.user_email:hover {
+  color: #f40303; /* Darker slate on hover */
+}

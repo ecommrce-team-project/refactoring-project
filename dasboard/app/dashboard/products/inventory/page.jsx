@@ -23,7 +23,7 @@ export default function Inventory() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/estate/getall');
+        const response = await fetch('http://localhost:3000/api/estates/getall');
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }

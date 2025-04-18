@@ -75,15 +75,7 @@ export default function NewProduct() {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>Category</label>
-              <select name="category" value={product.category} onChange={handleChange} required>
-                <option value="">Select category</option>
-                <option value="electronics">Electronics</option>
-                <option value="clothing">Clothing</option>
-                <option value="home">Home & Kitchen</option>
-              </select>
-            </div>
+
             <div className="form-group">
               <label>Status</label>
               <select name="status" value={product.status} onChange={handleChange}>
