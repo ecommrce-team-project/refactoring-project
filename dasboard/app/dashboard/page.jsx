@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import styles from './dashboard.module.css';
 import {
   LayoutDashboard,
   BarChart2,
@@ -105,15 +106,15 @@ export default function Dashboard() {
   const [pendingVerifications, setPendingVerifications] = useState([
     {
       id: 1,
-      name: "Michael Johnson",
-      email: "michael.johnson@example.com",
+      name: "Amine",
+      email: "amine@gmail.com",
       status: "pending",
       documents: ["ID Document", "Proof of Address"]
     },
     {
       id: 2,
-      name: "Sarah Williams",
-      email: "sarah.williams@example.com",
+      name: "yazid ",
+      email: "yazid@gmail.com",
       status: "pending",
       documents: ["ID Document"]
     }
@@ -131,22 +132,27 @@ export default function Dashboard() {
     setSidebarCollapsed(!sidebarCollapsed)
   }
 
-  // Toggle dark mode
+  // Theme toggle function with proper initialization
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode);
-    if (newDarkMode) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
+    
+    // Save to localStorage
+    try {
+      localStorage.setItem('darkMode', JSON.stringify(newDarkMode));
+    } catch (error) {
+      console.error('Failed to save theme preference:', error);
     }
-  }
 
-  // Toggle notifications
+    // Update DOM
+    document.documentElement.classList.toggle('dark-mode', newDarkMode);
+    document.documentElement.style.colorScheme = newDarkMode ? 'dark' : 'light';
+  };
+
+  // Notifications toggle with animation
   const toggleNotifications = () => {
-    setNotificationsOpen(!notificationsOpen)
-  }
+    setNotificationsOpen(prev => !prev);
+  };
 
   // Update fetchEstates function
   const fetchEstates = async () => {
@@ -222,6 +228,24 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+
+  // Add useEffect for initial theme setup
+  useEffect(() => {
+    // Get saved theme preference
+    const savedTheme = localStorage.getItem('darkMode');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialDarkMode = savedTheme ? JSON.parse(savedTheme) : prefersDark;
+
+    // Set initial theme
+    setDarkMode(initialDarkMode);
+    document.documentElement.classList.toggle('dark-mode', initialDarkMode);
+    document.documentElement.style.colorScheme = initialDarkMode ? 'dark' : 'light';
+
+    // Cleanup notifications when component unmounts
+    return () => {
+      setNotificationsOpen(false);
+    };
+  }, []);
 
   // Update the useEffect hooks
   useEffect(() => {
@@ -560,7 +584,9 @@ export default function Dashboard() {
               <div className="chart-container">
                 <div className="chart-card">
                   <div className="chart-header">
-                    <h5>Overview</h5>
+                  <button className="btn-refresh" onClick={regenerateChartData}>
+                      OverView
+                    </button>
                     <button className="btn-refresh" onClick={regenerateChartData}>
                       Refresh Data
                     </button>
@@ -588,7 +614,11 @@ export default function Dashboard() {
               <div className="recent-sales-container">
                 <div className="recent-sales-card">
                   <div className="recent-sales-header">
-                    <h5>Recent Sales</h5>
+                  <button className="btn-refresh" onClick={(e)=>
+                    handleSidebarNavigation("customers")
+                  }>
+                  Recent Sales
+                    </button>
                   </div>
                   <div className="recent-sales-body">
                     <ul className="recent-sales-list">
