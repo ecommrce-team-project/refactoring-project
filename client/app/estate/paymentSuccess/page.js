@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './paymentSuccess.module.css';
+import styles from './PaymentSuccess.module.css';
 
 export default function PaymentSuccess() {
   return (
