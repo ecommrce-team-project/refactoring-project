@@ -54,26 +54,16 @@ export default function Customers() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchCustomers();
+    // Simulate API call with fake data
+    const loadFakeData = () => {
+      setTimeout(() => {
+        setCustomers(fakeUsers);
+        setLoading(false);
+      }, 1000); // Simulate network delay
+    };
+    
+    loadFakeData();
   }, []);
-
-  const fetchCustomers = async () => {
-    try {
-      setLoading(true);
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Use fake data instead of API call
-      setCustomers(fakeUsers);
-      setError(null);
-      
-    } catch (err) {
-      console.error('Error:', err);
-      setError('Failed to fetch customers');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDeleteCustomer = (customerId) => {
     if (window.confirm('Are you sure you want to delete this customer?')) {
@@ -106,7 +96,7 @@ export default function Customers() {
     return (
       <div className="error-container">
         <p className="error-message">{error}</p>
-        <button onClick={fetchCustomers} className="btn-retry">
+        <button onClick={() => setError(null)} className="btn-retry">
           Retry
         </button>
       </div>
@@ -136,7 +126,11 @@ export default function Customers() {
                 <tr key={customer.id}>
                   <td>
                     <div className={styles.user_info}>
-                   
+                      <img 
+                        src={customer.avatar} 
+                        alt={customer.name}
+                        className={styles.user_avatar}
+                      />
                       <div>
                         <div className={styles.user_name}>{customer.name}</div>
                         <div className={styles.user_email}>{customer.email}</div>

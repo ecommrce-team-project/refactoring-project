@@ -3,16 +3,16 @@
 import { useRouter } from 'next/navigation';
 import styles from './oneEstate.module.css';
 
-const OneEstate = ({ estate }) => {
+const OneEstate = ({ estate, onBuy }) => {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleView = () => {
     router.push(`/estate/oneEstate/${estate.id}`);
   };
 
   return (
     <div className={styles.card}>
-      <div className={styles.imageContainer}>
+      <div className={styles.imageContainer} onClick={handleView} style={{ cursor: 'pointer' }}>
         <img
           src={estate.image_url}
           alt={estate.title}
@@ -37,15 +37,15 @@ const OneEstate = ({ estate }) => {
           </div>
         </div>
         <div className={styles.priceSection}>
-          <div className={styles.price}>
-            {estate.price} €
+          <div className={styles.price}>{estate.price} €</div>
+          <div className={styles.buttons}>
+            <button className={styles.viewButton} onClick={handleView}>
+              View
+            </button>
+            <button className={styles.buyButton} onClick={() => onBuy(estate)}>
+              Down Payment
+            </button>
           </div>
-          <button 
-            onClick={handleClick}
-            className={styles.viewButton}
-          >
-            buy now
-          </button>
         </div>
       </div>
     </div>

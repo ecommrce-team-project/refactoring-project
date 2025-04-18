@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
                 isUrl: true,
             },
         },
+        status: {
+            type: DataTypes.ENUM('Active', 'Inactive'),
+            defaultValue: 'Inactive'
+        },
     }, { timestamps: true });
 
     return User;

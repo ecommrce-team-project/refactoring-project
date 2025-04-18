@@ -1,10 +1,17 @@
 .user-info {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .user-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user_avatar {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
 }
