@@ -31,8 +31,8 @@ module.exports = {
         amount: downPaymentAmount.toString(), // Convert to string if API requires
         accept_card: "true",
         session_timeout_secs: 2200,
-        success_link: `${BASE_URL}/down-payment/success`, // Use BASE_URL variable
-        fail_link: `${BASE_URL}/down-payment/fail`,
+        success_link: `http://localhost:3001/payment/success`, // Use BASE_URL variable
+        fail_link: `http://localhost:3001/payment/failure`,
         developer_tracking_id: process.env.FLOUCI_DEVELOPER_TRACKING_ID // Add your tracking ID
       };
 

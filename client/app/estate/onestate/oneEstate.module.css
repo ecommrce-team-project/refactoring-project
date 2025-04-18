@@ -501,8 +501,32 @@
   margin-top: 20px;
 }
 
+.buttons {
+  gap: 5px ;
+  width: 160px;
+  margin: auto;
+}
+
 .viewButton {
 background-color: #f9ca11;
+border: none;
+padding: 10px 20px;
+border-radius: 8px;
+font-size: 0.9rem;
+font-weight: 600;
+cursor: pointer;
+color: rgb(88, 88, 88);
+transition: all 0.3s ease;
+width: 100px;
+text-align: center;
+width: 100%;
+align-items: center;
+justify-content: center;
+color: white;
+}
+
+.buyButton {
+  background-color: #116ef9;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -513,11 +537,40 @@ background-color: #f9ca11;
   transition: all 0.3s ease;
 }
 
-.viewButton:hover {
-  
-  transform: translateY(-2px);
+.viewButton {
+  background: linear-gradient(135deg, #fde68a, #facc15);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #111827;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.4);
+  display: flex;
 }
 
-.viewButton:active {
-  transform: translateY(0);
+.viewButton:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.6);
 }
+
+.buyButton {
+  background: linear-gradient(135deg, #3b82f6, #9333ea);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.buyButton:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6);
+}
+
