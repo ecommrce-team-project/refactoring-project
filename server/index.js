@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(
     cors({
-        origin: [process.env.CLIENT_URL, "http://localhost:3005"],
+        origin: ["http://localhost:3001", "http://localhost:3002","http://localhost:3005"],
         credentials: true,
         
     })
