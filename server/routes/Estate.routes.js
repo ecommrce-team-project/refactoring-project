@@ -11,7 +11,7 @@ Router.get("/getall", getAllEstate)
 Router.get("/get/:id", getEstateById)
 Router.post("/create", createEstate)
 Router.put("/update/:id", updateEstate)
-Router.delete("/delete/:id", deleteEstate)
+Router.delete("/remov/:id", deleteEstate)
 Router.get("/getByCategory/:categoryId", getEstatesByCategory)
 
 

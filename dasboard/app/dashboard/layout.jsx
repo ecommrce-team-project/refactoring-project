@@ -23,8 +23,8 @@ export default function DashboardLayout({ children }) {
     { path: "/dashboard", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
     { path: "/dashboard/products", icon: <ShoppingBag size={20} />, label: "Products" },
     { path: "/dashboard/customers", icon: <Users size={20} />, label: "Customers" },
-    { path: "/dashboard/orders", icon: <FileText size={20} />, label: "Orders" },
-    { path: "/dashboard/settings", icon: <Settings size={20} />, label: "Settings" },
+    { path: "/dashboard/Verify", icon: <FileText size={20} />, label: "Verify" },
+    { path: "/dashboard/New Prouct", icon: <Settings size={20} />, label: "New Prouct" },
   ]
 
   return (

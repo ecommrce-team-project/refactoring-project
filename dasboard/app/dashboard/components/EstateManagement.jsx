@@ -51,8 +51,8 @@ const EstateManagement = ({ darkMode }) => {
     e.preventDefault();
     try {
       const url = isEditing
-        ? `http://localhost:3000/api/dashboard/estates/${editingId}`
-        : "http://localhost:3000/api/dashboard/estates";
+        ? `http://localhost:3000/api/estates/update/${editingId}`
+        : "http://localhost:3000/api/estates/create";
 
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",
@@ -94,7 +94,7 @@ const EstateManagement = ({ darkMode }) => {
 
     try {
       const response = await fetch(
-       `http://localhost:3000/api/dashboard/estates/delete/${id}`,
+       `http://localhost:3000/api/estates/remov/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -261,39 +261,6 @@ const EstateManagement = ({ darkMode }) => {
           <div className={styles.error}>{error}</div>
         ) : (
           <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Location</th>
-                <th>Category</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {estates.map((estate) => (
-                <tr key={estate.id}>
-                  <td>{estate.title}</td>
-                  <td>${estate.price}</td>
-                  <td>{estate.location}</td>
-                  <td>{estate.Category?.name || "N/A"}</td>
-                  <td>
-                    <button
-                      className={styles.actionButton}
-                      onClick={() => handleEdit(estate)}
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      className={styles.actionButton}
-                      onClick={() => handleDelete(estate.id)}
-                    >
-                      <Trash size={16} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
           </table>
         )}
       </div>

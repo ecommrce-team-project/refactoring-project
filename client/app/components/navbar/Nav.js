@@ -163,7 +163,10 @@ const Nav = () => {
                         
                       </button>
             {isAdmin && (
-                        <Link href="/adminDashboard" className={styles.adminButton}>
+                        <Link 
+                          href="http://localhost:3002/" // Changed from "/dasboard" to "/dashboard"
+                          className={styles.adminButton}
+                        >
                           Dashboard
                         </Link>
                       )}

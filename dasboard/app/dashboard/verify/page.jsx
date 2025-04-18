@@ -8,15 +8,15 @@ export default function VerifyCustomers() {
   const [pendingVerifications, setPendingVerifications] = useState([
     {
       id: 1,
-      name: 'Michael Johnson',
-      email: 'michael.johnson@example.com',
+      name: 'Amine',
+      email: 'amine@gmail.com',
       status: 'pending',
       documents: ['ID Document', 'Proof of Address'],
     },
     {
       id: 2,
-      name: 'Sarah Williams',
-      email: 'sarah.williams@example.com',
+      name: 'Yazid',
+      email: 'yazid@gmail.com',
       status: 'pending',
       documents: ['ID Document'],
     },
