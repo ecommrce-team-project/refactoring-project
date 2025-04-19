@@ -1,101 +1,135 @@
 require("dotenv").config({ path: "./utils/.env" });
-const { DownPayment, Estate, User, Op } = require('../database/index.js'); // Added Op
+const { DownPayment, Estate, User, Op } = require('../database/index.js');
 const axios = require('axios');
 
 // Environment variables
-const BASE_URL = process.env.BASE_URL; // Add this
+const BASE_URL = process.env.BASE_URL;
 const FLOUCI_APP_TOKEN = process.env.FLOUCI_APP_TOKEN;
-const FLOUCI_APP_SECRET = process.env.FLOUCI_SECRET; // Renamed for clarity
+const FLOUCI_APP_SECRET = process.env.FLOUCI_SECRET;
+const CLIENT_URL = process.env.CLIENT_URL;
 
 module.exports = {
   initiateDownPayment: async (req, res) => {
     try {
+      console.log('Received payment initiation request:', req.body);
+      
       const { userId, estateId } = req.body;
 
       // Validate input
       if (!userId || !estateId) {
-        return res.status(400).json({ error: 'userId and estateId are required' });
+        console.log('Missing required fields:', { userId, estateId });
+        return res.status(400).json({ 
+          error: 'userId and estateId are required',
+          received: { userId, estateId }
+        });
       }
 
       // Get estate details
       const estate = await Estate.findByPk(estateId);
-      if (!estate) return res.status(404).json({ error: 'Estate not found' });
+      if (!estate) {
+        console.log('Estate not found:', estateId);
+        return res.status(404).json({ error: 'Estate not found' });
+      }
 
-      // Calculate down payment (convert to string if API requires it)
+      console.log('Found estate:', estate.toJSON());
+
+      // Calculate down payment
       const downPaymentAmount = estate.price * 0.1;
+      console.log('Calculated down payment amount:', downPaymentAmount);
 
       // Prepare Flouci payload
       const payload = {
         app_token: FLOUCI_APP_TOKEN,
-        app_secret: FLOUCI_APP_SECRET, // Use renamed variable
-        amount: downPaymentAmount.toString(), // Convert to string if API requires
+        app_secret: FLOUCI_APP_SECRET,
+        amount: downPaymentAmount.toString(),
         accept_card: "true",
         session_timeout_secs: 2200,
-        success_link: 'http://localhost:3001/estate/paymentSuccess', // Use BASE_URL variable
-        fail_link: 'http://localhost:3001/estate/paymentFailure', // Use BASE_URL variable
+        success_link: 'http://localhost:3000/estate/paymentSuccess', // Use BASE_URL variable
+        fail_link: 'http://localhost:3000/estate/paymentFailure', // Use BASE_URL variable
         developer_tracking_id: process.env.FLOUCI_DEVELOPER_TRACKING_ID // Add your tracking ID
       };
 
+      console.log('Flouci payload:', payload);
+
       // Make API request
       const response = await axios.post(
-        'https://developers.flouci.com/api/generate_payment', // Use full URL
+        `${BASE_URL}/generate_payment`,
         payload,
         {
           headers: {
-            'Content-Type': 'application/json',
-            // Add any additional required headers
+            'Content-Type': 'application/json'
           }
         }
       );
-      console.log('Flouci response:', response); // Log the response for debugging
 
-      // Create down payment record
+      console.log('Flouci API response:', response.data);
+
+      if (!response.data || !response.data.result) {
+        throw new Error('Invalid response from payment gateway');
+      }
+
       const { link, payment_id } = response.data.result;
 
+      // Create down payment record
       const downPayment = await DownPayment.create({
         user_id: userId,
         estate_id: estateId,
         amount: downPaymentAmount,
-        payment_url:link,
-        transaction_id: payment_id // Save Flouci’s ID here
+        payment_url: link,
+        transaction_id: payment_id,
+        status: 'pending'
       });
 
+      console.log('Created down payment record:', downPayment.toJSON());
 
       res.status(201).json({
         message: 'Down payment initiated',
-        payment_url: response.data.result.link,
+        payment_url: link,
         downPaymentId: downPayment.id
       });
 
     } catch (error) {
       console.error('Payment error:', error.response?.data || error.message);
+      
+      // Handle specific error cases
+      if (error.response?.status === 401) {
+        return res.status(401).json({
+          error: 'Invalid payment gateway credentials',
+          details: 'Please check your Flouci API credentials'
+        });
+      }
+      
+      if (error.response?.status === 400) {
+        return res.status(400).json({
+          error: 'Invalid payment request',
+          details: error.response.data?.message || 'Please check your payment details',
+          flouciError: error.response.data
+        });
+      }
+
       res.status(500).json({
         error: 'Payment failed',
-        details: error.response?.data || error.message
+        details: error.response?.data?.message || error.message
       });
     }
   },
   verifyPayment: async (req, res) => {
-  
-    
     try {
-      const  downPaymentId  = req.params.id;
-  
+      const downPaymentId = req.params.id;
+      const { payment_id } = req.body;
+
+      console.log('Verification request:', { downPaymentId, payment_id });
+
       // Find the DownPayment record by its ID
       const downPayment = await DownPayment.findByPk(downPaymentId);
-      console.log("downPayment", downPayment.BASE_URL);
       if (!downPayment) {
+        console.error('Down payment not found:', downPaymentId);
         return res.status(404).json({ error: 'Down payment not found' });
       }
-  
-      const paymentId = downPayment.transaction_id;
-      if (!paymentId) {
-        return res.status(400).json({ error: 'No transaction ID associated with this down payment' });
-      }
-  
+
       // Verify payment using Flouci API
       const verification = await axios.get(
-        `https://developers.flouci.com/api/verify_payment/${paymentId}`,
+        `${BASE_URL}/verify_payment/${payment_id}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -104,30 +138,33 @@ module.exports = {
           }
         }
       );
-      if (verification.data.success) {
-        verification.data.result.status= 'paid';
-      }else{
-        verification.data.result.status= 'failed';
+
+      console.log('Flouci verification response:', verification.data);
+
+      if (!verification.data || !verification.data.result) {
+        throw new Error('Invalid verification response');
       }
-  
+
+      const status = verification.data.success ? 'paid' : 'failed';
+
       // Update the down payment status
       await downPayment.update({
-        status: verification.data.result.status
+        status: status,
+        transaction_id: payment_id // Update the transaction ID
       });
-  
+
       res.status(200).json({
         message: 'Payment verification completed',
-        status: verification.data.result.status,
+        status: status,
         flouciResponse: verification.data
       });
-  
+
     } catch (error) {
       console.error('Verification error:', error.response?.data || error.message);
       res.status(500).json({
         error: 'Verification failed',
-        details: error.response?.data || error.message
+        details: error.response?.data?.message || error.message
       });
     }
   }
-  
-}
+};

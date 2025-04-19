@@ -160,7 +160,7 @@ export default function Dashboard() {
       setLoading(true);
       console.log('Fetching estates...');
       
-      const response = await fetch('http://localhost:3000/api/estates/getall');
+      const response = await fetch('http://localhost:3001/api/estates/getall');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -196,18 +196,15 @@ export default function Dashboard() {
       setLoading(true);
       console.log('Fetching products...');
       
-      const response = await fetch('http://localhost:3000/api/estates/getall');
+      const response = await fetch('http://localhost:3001/api/estates/getall');
       
-      // First check if response is ok before trying to parse JSON
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      // Log raw response for debugging
       const text = await response.text();
       console.log('Raw response:', text);
       
-      // Try to parse JSON
       let data;
       try {
         data = JSON.parse(text);
@@ -291,14 +288,18 @@ export default function Dashboard() {
   // Handle save settings
   const handleSaveSettings = async () => {
     try {
-      // Update local state first
-      setUserSettings(prevSettings => ({
-        ...prevSettings,
-        // Keep the existing password if not changed
-        password: prevSettings.password
-      }));
+      const response = await fetch('http://localhost:3001/api/users/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userSettings),
+      });
 
-      // Show success message
+      if (!response.ok) {
+        throw new Error('Failed to update settings');
+      }
+
       alert('Settings updated successfully!');
     } catch (error) {
       console.error('Error updating settings:', error);
@@ -379,7 +380,7 @@ export default function Dashboard() {
   const handleDeleteProduct = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const response = await fetch(`http://localhost:3000/api/estates/remov/${productId}`, {
+        const response = await fetch(`http://localhost:3001/api/estates/remov/${productId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -390,7 +391,6 @@ export default function Dashboard() {
           throw new Error('Failed to delete product');
         }
 
-        // Update local state after successful deletion
         setProducts(products.filter(product => product.id !== productId));
         alert("Product deleted successfully!");
       } catch (error) {

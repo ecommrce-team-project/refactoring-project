@@ -99,7 +99,7 @@ export default function ProfilePage() {
       };
 
       const response = await axios.put(
-        `http://localhost:3000/api/users/${user.id}`,
+        `http://localhost:3001/api/users/${user.id}`,
         updatedData,
         {
           withCredentials: true

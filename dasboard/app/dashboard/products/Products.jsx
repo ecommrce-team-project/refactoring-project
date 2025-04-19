@@ -25,11 +25,12 @@ export default function Products({
 
   const handleDeleteConfirmed = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/estates/remov/${productToDelete}`, {
+      const response = await fetch(`http://localhost:3001/api/estates/remov/${productToDelete}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include'
       })
 
       if (!response.ok) {
@@ -54,11 +55,12 @@ export default function Products({
 
   const handleEditSubmit = async (updatedProduct) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/estates/update/${updatedProduct.id}`, {
+      const response = await fetch(`http://localhost:3001/api/estates/update/${updatedProduct.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(updatedProduct),
       })
 

@@ -9,7 +9,7 @@ require("./database/index.js");
 
 // Initialize app
 const app = express();
-const port = process.env.SERVER_PORT || 3000;
+const port = process.env.SERVER_PORT || 3001;
 
 // Middleware
 app.use(morgan("dev"));
@@ -17,25 +17,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
-
-// CORS configuration
 app.use(
-  cors({
-    origin: ["http://localhost:3002", "http://localhost:3000"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
+    cors({
+        origin: ["http://localhost:3000", "http://localhost:3002","http://localhost:3005"],
+        credentials: true,
+        
+    })
 );
-
-// Verify request method middleware
-app.use((req, res, next) => {
-  const allowedMethods = ["GET", "POST", "PUT", "DELETE"];
-  if (!allowedMethods.includes(req.method)) {
-    return res.status(405).json({ message: "Method Not Allowed" });
-  }
-  next();
-});
 
 // Import routes
 const userRoutes = require("./routes/user.routes");
@@ -57,22 +45,22 @@ app.use("/api/dashboard", dashboardRoute);
 
 // Error handling
 app.use((req, res, next) => {
-  next(createError.NotFound());
+    next(createError.NotFound());
 });
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-    },
-  });
+    res.status(err.status || 500);
+    res.json({
+        error: {
+            status: err.status || 500,
+            message: err.message,
+        },
+    });
 });
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server running on http://127.0.0.1:${port}`);
+    console.log(`Server running on http://127.0.0.1:${port}`);
 });
 
 module.exports = app;

@@ -24,7 +24,7 @@ const EstateManagement = ({ darkMode }) => {
 
   const fetchEstates = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/estates/getall");
+      const response = await fetch("http://localhost:3001/api/estates/getall");
       if (!response.ok) throw new Error("Failed to fetch estates");
       const data = await response.json();
       setEstates(data);
@@ -50,26 +50,46 @@ const EstateManagement = ({ darkMode }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = isEditing
-        ? `http://localhost:3000/api/estates/update/${editingId}`
-        : "http://localhost:3000/api/estates/create";
-
-      const response = await fetch(url, {
-        method: isEditing ? "PUT" : "POST",
+      const response = await fetch('http://localhost:3001/api/estates/add', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Failed to save estate");
+      if (!response.ok) {
+        throw new Error('Failed to add estate');
+      }
 
-      await fetchEstates();
-      resetForm();
-      alert(`Estate ${isEditing ? "updated" : "created"} successfully!`);
-    } catch (err) {
-      setError(err.message);
-      alert("Error saving estate. Please try again.");
+      alert('Estate added successfully!');
+      // Reset form or redirect
+    } catch (error) {
+      console.error('Error adding estate:', error);
+      alert('Failed to add estate. Please try again.');
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3001/api/estates/update/${formData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update estate');
+      }
+
+      alert('Estate updated successfully!');
+      // Reset form or redirect
+    } catch (error) {
+      console.error('Error updating estate:', error);
+      alert('Failed to update estate. Please try again.');
     }
   };
 
@@ -94,7 +114,7 @@ const EstateManagement = ({ darkMode }) => {
 
     try {
       const response = await fetch(
-       `http://localhost:3000/api/estates/remov/${id}`,
+       `http://localhost:3001/api/estates/remov/${id}`,
         {
           method: "DELETE",
           headers: {

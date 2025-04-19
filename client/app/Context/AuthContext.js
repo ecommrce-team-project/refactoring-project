@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get('http://localhost:3000/api/auth/me', {
+      const { data } = await axios.get('http://localhost:3001/api/auth/me', {
         withCredentials: true
       });
       setUser(data);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/login', credentials, {
+      const response = await axios.post('http://localhost:3001/api/auth/login', credentials, {
         withCredentials: true
       });
       const userData = await fetchUser();
@@ -47,17 +47,18 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.delete('http://localhost:3000/api/auth/logout', {
+      await axios.delete('http://localhost:3001/api/auth/logout', {
         withCredentials: true
       });
       setUser(null);
+      // Clear any stored form data
       localStorage.removeItem('authForm');
       sessionStorage.clear();
       router.refresh();
       router.push('/');
     } catch (error) {
       console.error('Logout failed:', error);
-      throw error; 
+      throw error; // Propagate error to handle in component
     }
   };
 
