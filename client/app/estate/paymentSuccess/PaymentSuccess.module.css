@@ -56,36 +56,62 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #ecfdf5; /* Light green background for success */
-  color: #047857; /* Green text for success */
-  text-align: center;
   padding: 2rem;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.successPage[data-status="verifying"] {
+  color: #4a6cf7;
+}
+
+.successPage[data-status="success"] {
+  color: #28a745;
+}
+
+.successPage[data-status="failed"] {
+  color: #dc3545;
 }
 
 .successPage h1 {
   font-size: 2.5rem;
-  font-weight: bold;
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .successPage p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
-  color: #4b5563; /* Neutral text color */
+  color: #6c757d;
+  max-width: 600px;
 }
 
-.homeLink {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: #047857;
-  color: #ffffff;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.homeButton {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  background-color: #4a6cf7;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.homeLink:hover {
-  background-color: #065f46;
-  transform: translateY(-2px);
+.homeButton:hover {
+  background-color: #3a5ce5;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #4a6cf7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 2rem 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

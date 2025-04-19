@@ -109,9 +109,9 @@ module.exports.register = async (req, res) => {
   };
 // 🔹 Login User
 module.exports.login = async (req, res) => {
-    
     try {
-        const result = await loginSchema.validateAsync(req.body)
+        // Validate input
+        const result = await loginSchema.validateAsync(req.body);
 
         // Find user
         const user = await User.findOne({
@@ -119,18 +119,43 @@ module.exports.login = async (req, res) => {
                 [Op.or]: [{ username: result.identifier }, { email: result.identifier }]
             }
         });
-        if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
         // Check password
         const validPassword = await bcrypt.compare(result.password, user.password);
-        if (!validPassword) return res.status(401).json({ error: 'Invalid credentials' });
+        if (!validPassword) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
         // Create token
-        const token = await signToken(user.id,user.role);
+        const token = await signToken(user.id);
+
         // Set cookie
         res.cookie("token", token, cookieOptions);
-        res.json({ message: 'Login successful' });
+
+        // Return success response with user data
+        res.json({
+            message: 'Login successful',
+            user: {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+                profilePicture: user.pfp,
+                role: user.role
+            }
+        });
     } catch (error) {
-        // if (error.isJoi) error=createError.BadRequest('Invali') // Validation error
-        res.status(500).json({ error: 'Error during login' });
+        console.error('Login error:', error);
+        if (error.isJoi) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+        res.status(500).json({ 
+            error: 'Error during login',
+            details: error.message 
+        });
     }
 };
 
@@ -174,4 +199,3 @@ module.exports.resetPassword = async (req, res) => {
   }
   
 };
-

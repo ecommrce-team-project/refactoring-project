@@ -43,7 +43,7 @@ export default function Analytics({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/categories/getall');
+        const response = await fetch('http://localhost:3001/api/categories/getall');
         if (!response.ok) {
           throw new Error('Failed to fetch categories');
         }

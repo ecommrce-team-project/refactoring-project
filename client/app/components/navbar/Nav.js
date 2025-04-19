@@ -164,7 +164,7 @@ const Nav = () => {
                       </button>
             {isAdmin && (
                         <Link 
-                          href="http://localhost:3002/" // Changed from "/dasboard" to "/dashboard"
+                          href="http://localhost:3002" // Changed from "/dasboard" to "/dashboard"
                           className={styles.adminButton}
                         >
                           Dashboard

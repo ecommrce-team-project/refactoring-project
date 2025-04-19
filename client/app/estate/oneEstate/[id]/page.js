@@ -15,7 +15,7 @@ export default function OneEstatePage() {
       if (!params?.id) return;
       
       try {
-        const res = await fetch(`http://localhost:3000/api/estates/get/${params.id}`, {
+        const res = await fetch(`http://localhost:3001/api/estates/get/${params.id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'

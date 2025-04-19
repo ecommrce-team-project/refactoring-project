@@ -21,7 +21,7 @@ const EstatePage = () => {
   useEffect(() => {
     const fetchEstates = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/estates/getall');
+        const response = await fetch('http://localhost:3001/api/estates/getall');
         if (!response.ok) throw new Error('Failed to fetch estates');
         const data = await response.json();
         setEstates(data);
@@ -53,22 +53,49 @@ const EstatePage = () => {
 
   const handleConfirmPayment = async () => {
     try {
-      const userId = user?.id; 
-      const response = await fetch('http://localhost:3000/api/down-payments/initiate', {
+      const userId = user?.id;
+      if (!userId) {
+        alert('Please log in to make a payment');
+        return;
+      }
+
+      if (!selectedEstate) {
+        alert('No estate selected');
+        return;
+      }
+
+      console.log('Initiating payment with:', { userId, estateId: selectedEstate.id });
+
+      const response = await fetch('http://localhost:3001/api/down-payments/initiate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, estateId: selectedEstate.id })
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ 
+          userId: parseInt(userId), // Ensure userId is a number
+          estateId: parseInt(selectedEstate.id) // Ensure estateId is a number
+        })
       });
 
       const data = await response.json();
+      console.log('Payment response:', data);
+      
+      if (!response.ok) {
+        throw new Error(data.details || data.error || 'Failed to start payment');
+      }
+
       if (data.payment_url) {
+        // Store the downPaymentId in localStorage for verification
+        localStorage.setItem('currentDownPaymentId', data.downPaymentId);
         window.location.href = data.payment_url;
       } else {
-        alert('Failed to start payment');
+        throw new Error('No payment URL received');
       }
     } catch (err) {
       console.error('Payment error:', err);
-      alert('Something went wrong!');
+      alert(err.message || 'Something went wrong! Please try again.');
     }
   };
 

@@ -141,7 +141,7 @@ const AuthSidebar = ({ isOpen, onClose }) => {
         }
         
         // Registration
-        await axios.post("http://localhost:3000/api/auth/register", {
+        await axios.post("http://localhost:3001/api/auth/register", {
           username: form.username,
           email: form.email,
           password: form.password
@@ -223,7 +223,7 @@ const AuthSidebar = ({ isOpen, onClose }) => {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/auth/reset-password', {
+      await axios.post('http://localhost:3001/api/auth/reset-password', {
         email: resetForm.email,
         newPassword: resetForm.newPassword
       });
